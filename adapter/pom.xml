@@ -64,7 +64,21 @@
       <groupId>org.testcontainers</groupId>
       <artifactId>mysql</artifactId>
       <version>${testcontainers.mysql.version}</version>
+      <!-- Ignore the internal version with vulnerabilities -->
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.commons</groupId>
+          <artifactId>commons-compress</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-compress -->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-compress</artifactId>
+      <version>1.26.2</version>
+    </dependency>
+
 
     <!-- To use the "attached test JAR" from the "model" module -->
     <dependency>
