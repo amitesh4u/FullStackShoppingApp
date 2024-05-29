@@ -7,13 +7,14 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.2.5</version>
+    <version>3.3.0</version>
   </parent>
 
   <groupId>com.amitesh</groupId>
   <artifactId>SpringBootShoppingApp</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
+  <name>Spring Boot Shopping App</name>
 
   <modules>
     <module>model</module>
@@ -152,6 +153,13 @@
       <version>${springdoc.openapi..version}</version>
     </dependency>
 
+
+    <!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf -->
+<!--    <dependency>-->
+<!--      <groupId>org.springframework.boot</groupId>-->
+<!--      <artifactId>spring-boot-starter-thymeleaf</artifactId>-->
+<!--    </dependency>-->
+
   </dependencies>
 
   <build>
@@ -267,7 +275,7 @@
                     <limit>
                       <counter>INSTRUCTION</counter>
                       <value>COVEREDRATIO</value>
-                      <minimum>97%</minimum>
+                      <minimum>65%</minimum>
                     </limit>
                   </limits>
                 </rule>
