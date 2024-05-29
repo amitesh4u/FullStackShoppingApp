@@ -58,9 +58,9 @@
     </Appenders>
 
     <Loggers>
-        <Logger name="org.springframework.core" level="error">
-            <AppenderRef ref="RollingRAFAppender"/>
-        </Logger>
+        <AsyncLogger name="org.springframework.core" level="error">
+            <AppenderRef ref="AsyncRollingRAFAppender"/>
+        </AsyncLogger>
         <!--
 			# Additivity: Gets or sets a value indicating if child loggers inherit their parent's appenders.
 			# immediateFlush: Asynchronous loggers and appenders will automatically flush at the end of a batch of events, even if immediateFlush is set to false.
