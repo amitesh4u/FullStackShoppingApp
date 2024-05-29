@@ -25,6 +25,8 @@ This project contains a simple React 18 web application with Java 21, Spring Boo
 * **JUnit**
 * **Lombok**
 * **Spring DATA**
+* **Tomcat**
+* **Jakarta EE** - Application server
 
 
 ## What is a Hexagonal Architecture?
