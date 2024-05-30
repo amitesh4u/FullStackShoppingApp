@@ -18,9 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpServerErrorException.InternalServerError;
 
-@CrossOrigin(origins = "${cors.front-end.url}")
 @RestController
-@RequestMapping("/carts")
+@RequestMapping("/api/v1/carts")
 @CustomLog
 @ApiResponse(responseCode = "500", description = "Internal server error, this should not happen",
     content = @Content(mediaType = "application/json",

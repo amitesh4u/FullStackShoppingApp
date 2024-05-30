@@ -19,9 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin(origins = "${cors.front-end.url}")
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/api/v1/products")
 @CustomLog
 @ApiResponse(responseCode = "400", description = "Missing or Invalid Query",
     content = @Content(mediaType = "application/json",
