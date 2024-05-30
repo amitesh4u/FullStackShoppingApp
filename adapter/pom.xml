@@ -6,106 +6,107 @@
 
   <parent>
     <groupId>com.amitesh</groupId>
-    <artifactId>SpringBootShoppingApp</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>shop</artifactId>
+    <version>1.0.0</version>
   </parent>
 
+  <groupId>com.amitesh.shop</groupId>
   <artifactId>adapter</artifactId>
 
   <dependencies>
     <!-- Adding dependency of core application module -->
     <dependency>
-      <groupId>com.amitesh</groupId>
+      <groupId>com.amitesh.shop</groupId>
       <artifactId>application</artifactId>
-      <version>${project.version}</version>
+      <version>${module.version}</version>
     </dependency>
 
-    <!-- Spring dependencies -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-jpa</artifactId>
-    </dependency>
+<!--    &lt;!&ndash; Spring dependencies &ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>org.springframework.boot</groupId>-->
+<!--      <artifactId>spring-boot-starter-data-jpa</artifactId>-->
+<!--    </dependency>-->
 
-    <!-- For in-memory database as MySQL expects a real implementation -->
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-    <!-- Required at runtime as a JDBC driver  -->
-    <dependency>
-      <groupId>com.mysql</groupId>
-      <artifactId>mysql-connector-j</artifactId>
-      <version>${mysql.connector.j.version}</version>
-    </dependency>
+<!--    &lt;!&ndash; For in-memory database as MySQL expects a real implementation &ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>com.h2database</groupId>-->
+<!--      <artifactId>h2</artifactId>-->
+<!--      <scope>runtime</scope>-->
+<!--    </dependency>-->
+<!--    &lt;!&ndash; Required at runtime as a JDBC driver  &ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>com.mysql</groupId>-->
+<!--      <artifactId>mysql-connector-j</artifactId>-->
+<!--      <version>${mysql.connector.j.version}</version>-->
+<!--    </dependency>-->
 
-    <!-- Test scope -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-      <!-- Exclude Spring Boot's Default Logging (Logback) -->
-      <exclusions>
-        <exclusion>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-starter-logging</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <!-- Allows to make HTTP calls from integration tests -->
-    <dependency>
-      <groupId>io.rest-assured</groupId>
-      <artifactId>rest-assured</artifactId>
-      <version>${rest.assured.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <!-- To launch a MySQL database from within the integration tests via Docker -->
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>mysql</artifactId>
-      <version>${testcontainers.mysql.version}</version>
-      <!-- Ignore the internal version with vulnerabilities -->
-      <exclusions>
-        <exclusion>
-          <groupId>org.apache.commons</groupId>
-          <artifactId>commons-compress</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-compress -->
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-compress</artifactId>
-      <version>1.26.2</version>
-    </dependency>
+<!--    &lt;!&ndash; Test scope &ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>org.springframework.boot</groupId>-->
+<!--      <artifactId>spring-boot-starter-test</artifactId>-->
+<!--      <scope>test</scope>-->
+<!--      &lt;!&ndash; Exclude Spring Boot's Default Logging (Logback) &ndash;&gt;-->
+<!--      <exclusions>-->
+<!--        <exclusion>-->
+<!--          <groupId>org.springframework.boot</groupId>-->
+<!--          <artifactId>spring-boot-starter-logging</artifactId>-->
+<!--        </exclusion>-->
+<!--      </exclusions>-->
+<!--    </dependency>-->
+<!--    &lt;!&ndash; Allows to make HTTP calls from integration tests &ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>io.rest-assured</groupId>-->
+<!--      <artifactId>rest-assured</artifactId>-->
+<!--      <version>${rest.assured.version}</version>-->
+<!--      <scope>test</scope>-->
+<!--    </dependency>-->
+<!--    &lt;!&ndash; To launch a MySQL database from within the integration tests via Docker &ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>org.testcontainers</groupId>-->
+<!--      <artifactId>mysql</artifactId>-->
+<!--      <version>${testcontainers.mysql.version}</version>-->
+<!--      &lt;!&ndash; Ignore the internal version with vulnerabilities &ndash;&gt;-->
+<!--      <exclusions>-->
+<!--        <exclusion>-->
+<!--          <groupId>org.apache.commons</groupId>-->
+<!--          <artifactId>commons-compress</artifactId>-->
+<!--        </exclusion>-->
+<!--      </exclusions>-->
+<!--    </dependency>-->
+<!--    &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.commons/commons-compress &ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>org.apache.commons</groupId>-->
+<!--      <artifactId>commons-compress</artifactId>-->
+<!--      <version>1.26.2</version>-->
+<!--    </dependency>-->
 
 
     <!-- To use the "attached test JAR" from the "model" module -->
-    <dependency>
-      <groupId>com.amitesh</groupId>
-      <artifactId>model</artifactId>
-      <version>${project.version}</version>
-      <classifier>tests</classifier>
-      <type>test-jar</type>
-      <scope>test</scope>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>com.amitesh.shop</groupId>-->
+<!--      <artifactId>model</artifactId>-->
+<!--      <version>${module.version}</version>-->
+<!--      <classifier>tests</classifier>-->
+<!--      <type>test-jar</type>-->
+<!--      <scope>test</scope>-->
+<!--    </dependency>-->
   </dependencies>
 
   <!-- To create an "attached test JAR" to be able to use this module's test classes in other modules -->
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>${maven.jar.plugin.version}</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>test-jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
+<!--  <build>-->
+<!--    <plugins>-->
+<!--      <plugin>-->
+<!--        <groupId>org.apache.maven.plugins</groupId>-->
+<!--        <artifactId>maven-jar-plugin</artifactId>-->
+<!--        <version>${maven.jar.plugin.version}</version>-->
+<!--        <executions>-->
+<!--          <execution>-->
+<!--            <goals>-->
+<!--              <goal>test-jar</goal>-->
+<!--            </goals>-->
+<!--          </execution>-->
+<!--        </executions>-->
+<!--      </plugin>-->
+<!--    </plugins>-->
+<!--  </build>-->
 </project>

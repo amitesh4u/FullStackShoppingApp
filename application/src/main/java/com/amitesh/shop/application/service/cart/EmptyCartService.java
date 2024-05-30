@@ -3,7 +3,9 @@ package com.amitesh.shop.application.service.cart;
 import com.amitesh.shop.application.port.in.cart.EmptyCartUseCase;
 import com.amitesh.shop.application.port.out.persistence.CartRepository;
 import com.amitesh.shop.model.customer.CustomerId;
+import org.springframework.stereotype.Service;
 
+@Service
 public class EmptyCartService implements EmptyCartUseCase {
 
   private final CartRepository cartRepository;

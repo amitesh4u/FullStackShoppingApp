@@ -1,8 +1,8 @@
 package com.amitesh.shop.bootstrap.integration;
 
-import static com.amitesh.shop.adapter.in.rest.helper.ProductsControllerAssertions.assertThatResponseIsProductList;
 import static com.amitesh.shop.adapter.out.persistence.TestProducts.COMPUTER_MONITOR;
 import static com.amitesh.shop.adapter.out.persistence.TestProducts.MONITOR_DESK_MOUNT;
+import static com.amitesh.shop.bootstrap.integration.ProductsControllerAssertions.assertThatResponseIsProductList;
 import static io.restassured.RestAssured.given;
 
 import io.restassured.response.Response;

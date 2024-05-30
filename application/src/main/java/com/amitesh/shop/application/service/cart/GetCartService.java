@@ -4,7 +4,9 @@ import com.amitesh.shop.application.port.in.cart.GetCartUseCase;
 import com.amitesh.shop.application.port.out.persistence.CartRepository;
 import com.amitesh.shop.model.cart.Cart;
 import com.amitesh.shop.model.customer.CustomerId;
+import org.springframework.stereotype.Service;
 
+@Service
 public class GetCartService implements GetCartUseCase {
 
   private final CartRepository cartRepository;

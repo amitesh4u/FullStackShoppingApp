@@ -3,7 +3,7 @@ package com.amitesh.shop.application.service.cart;
 import static com.amitesh.shop.application.service.ApplicationTestHelper.TEST_CUSTOMER_ID;
 import static com.amitesh.shop.application.service.ApplicationTestHelper.TEST_PRODUCT_1;
 import static com.amitesh.shop.application.service.ApplicationTestHelper.TEST_PRODUCT_2;
-import static com.amitesh.shop.model.ModelTestHelper.randomProductId;
+import static com.amitesh.shop.application.service.ModelTestHelper.randomProductId;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;

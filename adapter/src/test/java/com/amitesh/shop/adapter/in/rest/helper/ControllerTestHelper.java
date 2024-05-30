@@ -1,8 +1,12 @@
 package com.amitesh.shop.adapter.in.rest.helper;
 
-import static com.amitesh.shop.model.ModelTestHelper.PRODUCT_QUANTITY_IN_STOCK;
-import static com.amitesh.shop.model.ModelTestHelper.createTestProduct;
-import static com.amitesh.shop.model.ModelTestHelper.usDollars;
+//import static com.amitesh.shop.model.ModelTestHelper.PRODUCT_QUANTITY_IN_STOCK;
+//import static com.amitesh.shop.model.ModelTestHelper.createTestProduct;
+//import static com.amitesh.shop.model.ModelTestHelper.usDollars;
+
+import static com.amitesh.shop.adapter.in.rest.helper.ModelTestHelper.PRODUCT_QUANTITY_IN_STOCK;
+import static com.amitesh.shop.adapter.in.rest.helper.ModelTestHelper.createTestProduct;
+import static com.amitesh.shop.adapter.in.rest.helper.ModelTestHelper.usDollars;
 
 import com.amitesh.shop.model.customer.CustomerId;
 import com.amitesh.shop.model.product.Product;

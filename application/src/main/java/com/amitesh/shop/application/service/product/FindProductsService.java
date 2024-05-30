@@ -4,7 +4,9 @@ import com.amitesh.shop.application.port.in.product.FindProductsUseCase;
 import com.amitesh.shop.application.port.out.persistence.ProductRepository;
 import com.amitesh.shop.model.product.Product;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
+@Service
 public class FindProductsService implements FindProductsUseCase {
 
   private final ProductRepository productRepository;

@@ -1,8 +1,12 @@
 package com.amitesh.shop.application.service;
 
-import static com.amitesh.shop.model.ModelTestHelper.PRODUCT_QUANTITY_IN_STOCK;
-import static com.amitesh.shop.model.ModelTestHelper.createTestProduct;
-import static com.amitesh.shop.model.ModelTestHelper.euros;
+//import static com.amitesh.shop.model.ModelTestHelper.PRODUCT_QUANTITY_IN_STOCK;
+//import static com.amitesh.shop.model.ModelTestHelper.createTestProduct;
+//import static com.amitesh.shop.model.ModelTestHelper.euros;
+
+import static com.amitesh.shop.application.service.ModelTestHelper.PRODUCT_QUANTITY_IN_STOCK;
+import static com.amitesh.shop.application.service.ModelTestHelper.createTestProduct;
+import static com.amitesh.shop.application.service.ModelTestHelper.euros;
 
 import com.amitesh.shop.model.customer.CustomerId;
 import com.amitesh.shop.model.product.Product;

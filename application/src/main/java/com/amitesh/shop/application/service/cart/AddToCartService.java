@@ -9,7 +9,10 @@ import com.amitesh.shop.model.cart.InsufficientStockException;
 import com.amitesh.shop.model.customer.CustomerId;
 import com.amitesh.shop.model.product.Product;
 import com.amitesh.shop.model.product.ProductId;
+import org.springframework.stereotype.Service;
 
+
+@Service
 public class AddToCartService implements AddToCartUseCase {
 
   private final CartRepository cartRepository;

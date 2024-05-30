@@ -1,8 +1,8 @@
 package com.amitesh.shop.adapter.out.persistence;
 
-import static com.amitesh.shop.model.ModelTestHelper.PRODUCT_QUANTITY_IN_STOCK;
-import static com.amitesh.shop.model.ModelTestHelper.createTestProduct;
-import static com.amitesh.shop.model.ModelTestHelper.euros;
+import static com.amitesh.shop.adapter.in.rest.helper.ModelTestHelper.PRODUCT_QUANTITY_IN_STOCK;
+import static com.amitesh.shop.adapter.in.rest.helper.ModelTestHelper.createTestProduct;
+import static com.amitesh.shop.adapter.in.rest.helper.ModelTestHelper.euros;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.amitesh.shop.application.port.out.persistence.CartRepository;

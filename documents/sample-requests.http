@@ -1,3 +1,9 @@
+### Static HTML
+GET http://localhost:8080/shop
+
+### Rest Endpoint Static response
+GET http://localhost:8080/shop/web/greeting
+
 ### Search for products containing "plastic"
 GET http://localhost:8080/shop/products?query=plastic
 

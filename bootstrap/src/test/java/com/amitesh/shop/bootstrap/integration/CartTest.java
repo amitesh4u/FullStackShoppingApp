@@ -1,8 +1,8 @@
 package com.amitesh.shop.bootstrap.integration;
 
-import static com.amitesh.shop.adapter.in.rest.helper.CartsControllerAssertions.assertThatResponseIsCart;
 import static com.amitesh.shop.adapter.out.persistence.TestProducts.LED_LIGHTS;
 import static com.amitesh.shop.adapter.out.persistence.TestProducts.MONITOR_DESK_MOUNT;
+import static com.amitesh.shop.bootstrap.integration.CartsControllerAssertions.assertThatResponseIsCart;
 import static io.restassured.RestAssured.given;
 import static org.springframework.http.HttpStatus.OK;
 
