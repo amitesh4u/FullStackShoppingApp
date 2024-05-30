@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
+import {listProducts} from "../services/ProductService.js";
 
 const ListProductComponent = () => {
   const DUMMY_DATA = [
     {
       "id": "K3SR7PBX",
-      "name": "27-Inch Curved Computer Monitor",
+      "name": "26-Inch Curved Computer Monitor",
       "price": {
         "currency": "EUR",
         "amount": 159.99
@@ -39,6 +40,16 @@ const ListProductComponent = () => {
       "itemsInStock": 3299
     }
   ]
+
+  const [productList, setProducts] = useState([])
+
+  useEffect(() => {
+        listProducts()
+        .then(response => setProducts(response.data))
+        .catch(error => console.log(error))
+      },
+      [])
+
   return (
       <div className='container table-responsive'>
         <h1 className="text-center">Products List</h1>
@@ -53,7 +64,7 @@ const ListProductComponent = () => {
           </thead>
           <tbody>
           {
-            DUMMY_DATA.map(product =>
+            productList.map(product =>
                 <tr key={product.id}>
                   <td>{product.id}</td>
                   <td>{product.name}</td>
