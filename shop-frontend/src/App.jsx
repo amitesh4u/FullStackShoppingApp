@@ -1,5 +1,5 @@
 import './App.css'
-import ListProductComponent from "./ListProductComponent.jsx";
+import ListProductComponent from "./components/ListProductComponent.jsx";
 
 function App() {
 
