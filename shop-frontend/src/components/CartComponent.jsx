@@ -84,7 +84,7 @@ const CartComponent = () => {
         </table>
         <div>
           <p><b>Total Quantity: {cartItemList.numberOfItems}</b></p>
-          <p><b>Total Price: {cartItemList.subTotal.currency} {cartItemList.subTotal.amount}</b></p>
+          <p><b>Total Price: {cartItemList.subTotal?.currency} {cartItemList.subTotal?.amount}</b></p>
         </div>
       </div>
   )
