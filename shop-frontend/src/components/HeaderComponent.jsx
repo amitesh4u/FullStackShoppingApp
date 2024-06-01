@@ -1,6 +1,6 @@
 import React from 'react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faSignIn, faUser} from '@fortawesome/free-solid-svg-icons';
+import {faCartShopping, faSignIn, faUser } from '@fortawesome/free-solid-svg-icons';
 
 const HeaderComponent = () => {
   return (
@@ -57,6 +57,16 @@ const HeaderComponent = () => {
                       color: "rgb(200, 200, 200)"
                     }}/>
                     Login
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="#">
+                    <FontAwesomeIcon icon={faCartShopping} style={{
+                      paddingRight: '5px',
+                      fontSize: '20px',
+                      color: "rgb(200, 200, 200)"
+                    }}/>
+                    Cart
                   </a>
                 </li>
               </ul>

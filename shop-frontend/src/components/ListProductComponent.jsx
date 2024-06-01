@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {listProducts} from "../services/ProductService.js";
+import {faPlus, faMinus} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const ListProductComponent = () => {
   // const DUMMY_DATA = [
@@ -74,6 +76,37 @@ const ListProductComponent = () => {
                   <td>{product.name}</td>
                   <td>{product.price.currency} {product.price.amount}</td>
                   <td>{product.itemsInStock}</td>
+                  <td>
+                    <div style={{
+                      width: '150px',
+                      margin: '0px auto'}}>
+                    <div className="input-group">
+                    <span className="input-group-btn">
+                        <button type="button"
+                                className="btn btn-default btn-number"
+                                disabled="disabled" data-type="minus"
+                                data-field="quant[1]">
+                            <FontAwesomeIcon icon={faMinus}/>
+                        </button>
+                    </span>
+                      <input type="text" name="quant[1]"
+                             className="form-control input-number" value="1"
+                             min="1" max="10"/>
+                      <span className="input-group-btn">
+                        <button type="button"
+                                className="btn btn-default btn-number"
+                                data-type="plus" data-field="quant[1]">
+                           <FontAwesomeIcon icon={faPlus}/>
+                        </button>
+                    </span>
+                    </div>
+                    </div>
+                  </td>
+                  <td>
+                    <button className="btn btn-primary"
+                            type="AddToCart">Add To Cart
+                    </button>
+                  </td>
                 </tr>
             )
           }

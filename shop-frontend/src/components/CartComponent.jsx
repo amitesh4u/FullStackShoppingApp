@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {getCart} from "../services/CartService.js";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faMinus, faPlus, faTrashCan} from "@fortawesome/free-solid-svg-icons";
 
 const CartComponent = () => {
 
@@ -75,8 +77,44 @@ const CartComponent = () => {
                   <td>{item.productId}</td>
                   <td>{item.productName}</td>
                   <td>{item.price.currency} {item.price.amount}</td>
-                  <td>{item.quantity}</td>
-                  <td>{item.price.currency} {(item.quantity * item.price.amount).toFixed(2)}</td>
+                  <td>
+                    <div style={{
+                      width: '150px',
+                      margin: '0px auto'
+                    }}>
+                      <div className="input-group">
+                      <span className="input-group-btn">
+                        <button type="button"
+                                className="quantity-left-minus btn btn-danger btn-number"
+                                data-type="minus" data-field="">
+                          <FontAwesomeIcon icon={faMinus}/>
+                        </button>
+                      </span>
+                        <input type="text" id="quantity" name="quantity"
+                               className="form-control input-number"
+                               value={item.quantity}
+                               min="0" max={item.quantity} size="1"/>
+                        <span className="input-group-btn">
+                        <button type="button"
+                                className="quantity-right-plus btn btn-success btn-number"
+                                data-type="plus" data-field="">
+                          <FontAwesomeIcon icon={faPlus}/>
+                        </button>
+                      </span>
+                      </div>
+                    </div>
+                  </td>
+                  <td>{item.price.currency} {(item.quantity
+                      * item.price.amount).toFixed(2)}</td>
+                  <td>
+                    <a className="nav-link" href="#">
+                    <FontAwesomeIcon icon={faTrashCan} style={{
+                        paddingRight: '5px',
+                        fontSize: '20px',
+                        color: "rgb(200, 50, 50)"
+                      }}/>
+                    </a>
+                  </td>
                 </tr>
             )
           }
@@ -84,7 +122,8 @@ const CartComponent = () => {
         </table>
         <div>
           <p><b>Total Quantity: {cartItemList.numberOfItems}</b></p>
-          <p><b>Total Price: {cartItemList.subTotal?.currency} {cartItemList.subTotal?.amount}</b></p>
+          <p><b>Total Price: {cartItemList.subTotal?.currency} {cartItemList.subTotal?.amount}</b>
+          </p>
         </div>
       </div>
   )
