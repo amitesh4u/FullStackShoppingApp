@@ -30,6 +30,24 @@ public class Cart {
         .increaseQuantityBy(quantity, product.itemsInStock());
   }
 
+  public void removeProduct() {
+    lineItems.values().forEach( lineItem -> {
+      final Product product = lineItem.product();
+      final int quantity = lineItem.quantity();
+      lineItem.decreaseQuantityBy(quantity, product.itemsInStock());
+    });
+  }
+
+  public void removeProduct(final Product product, final int quantity) {
+    CartLineItem cartLineItem = lineItems.get(product.id());
+    if (null != cartLineItem){
+      cartLineItem.decreaseQuantityBy(quantity, product.itemsInStock());
+      if(cartLineItem.quantity() == 0){
+        lineItems.remove(product.id());
+      }
+    }
+  }
+
   public List<CartLineItem> lineItems() {
     return List.copyOf(lineItems.values());
   }

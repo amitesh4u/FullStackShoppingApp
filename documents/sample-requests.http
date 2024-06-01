@@ -31,5 +31,18 @@ POST http://localhost:8080/shop/api/v1/carts/61157/line-items?productId=Q3W43CNC
 ### Add "50ft Led Lights" to cart
 POST http://localhost:8080/shop/api/v1/carts/61157/line-items?productId=WM3BPG3E&quantity=3
 
+### Remove "Plastic Sheeting" from cart
+DELETE http://localhost:8080/shop/api/v1/carts/61157/line-items?productId=TTKQ8NJZ&quantity=5
+
+### Remove "Dual Monitor Desk Mount" from cart
+DELETE http://localhost:8080/shop/api/v1/carts/61157/line-items?productId=Q3W43CNC&quantity=1
+
+### Remove "50ft Led Lights" from cart
+DELETE http://localhost:8080/shop/api/v1/carts/61157/line-items?productId=WM3BPG3E&quantity=10
+
+### Delete "27-Inch Curved Computer Monitor" from cart
+DELETE http://localhost:8080/shop/api/v1/carts/61157/line-items?productId=K3SR7PBX&quantity=2
+
+
 ### Empty cart
 DELETE http://localhost:8080/shop/api/v1/carts/61157
