@@ -8,7 +8,7 @@ const HeaderComponent = () => {
         <nav className="navbar navbar-expand-lg bg-primary"
              data-bs-theme="dark">
           <div className="container-fluid">
-            <a className="navbar-brand" href="#">Shopping Application</a>
+            <a className="navbar-brand" href="/">Shopping Application</a>
             <button className="navbar-toggler collapsed" type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#navbarColor02"
@@ -19,17 +19,17 @@ const HeaderComponent = () => {
             <div className="navbar-collapse collapse" id="navbarColor02">
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
-                  <a className="nav-link active" aria-current="page"
-                     href="#">Home</a>
+                  <a className="nav-link" aria-current="page"
+                     href="/">Home</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">Products</a>
+                  <a className="nav-link" href="/product">Products</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">Cart</a>
+                  <a className="nav-link" href="/cart">Cart</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">About</a>
+                  <a className="nav-link" href="/about">About</a>
                 </li>
               </ul>
               <form className="d-flex" role="search">
@@ -60,7 +60,7 @@ const HeaderComponent = () => {
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">
+                  <a className="nav-link" href="/cart">
                     <FontAwesomeIcon icon={faCartShopping} style={{
                       paddingRight: '5px',
                       fontSize: '20px',
