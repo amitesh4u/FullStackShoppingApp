@@ -16,11 +16,14 @@ GET http://localhost:8080/shop/api/v1/products?query=x
 ### Show all products
 GET http://localhost:8080/shop/api/v1/products/all
 
+### Add Product
+POST http://localhost:8080/shop/api/v1/products/add?name=Tasty Namkeen&desc=100%25 Original Rajashthani Namkeen&qty=9&amount=70&currency=INR
+
 ### Get cart
 GET http://localhost:8080/shop/api/v1/carts/61157
 
 ### Add "Plastic Sheeting" to cart
-POST http://localhost:8080/shop/api/v1/carts/61157/line-items?productId=TTKQ8NJZ&quantity=20
+POST http://localhost:8080/shop/api/v1/carts/61157/line-items?productId=TTKQ8NJZ&quantity=8
 
 ### Add "27-Inch Curved Computer Monitor" to cart
 POST http://localhost:8080/shop/api/v1/carts/61157/line-items?productId=K3SR7PBX&quantity=2
@@ -32,13 +35,13 @@ POST http://localhost:8080/shop/api/v1/carts/61157/line-items?productId=Q3W43CNC
 POST http://localhost:8080/shop/api/v1/carts/61157/line-items?productId=WM3BPG3E&quantity=3
 
 ### Remove "Plastic Sheeting" from cart
-DELETE http://localhost:8080/shop/api/v1/carts/61157/line-items?productId=TTKQ8NJZ&quantity=5
+DELETE http://localhost:8080/shop/api/v1/carts/61157/line-items?productId=TTKQ8NJZ&quantity=2
 
 ### Remove "Dual Monitor Desk Mount" from cart
 DELETE http://localhost:8080/shop/api/v1/carts/61157/line-items?productId=Q3W43CNC&quantity=1
 
 ### Remove "50ft Led Lights" from cart
-DELETE http://localhost:8080/shop/api/v1/carts/61157/line-items?productId=WM3BPG3E&quantity=10
+DELETE http://localhost:8080/shop/api/v1/carts/61157/line-items?productId=WM3BPG3E&quantity=3
 
 ### Delete "27-Inch Curved Computer Monitor" from cart
 DELETE http://localhost:8080/shop/api/v1/carts/61157/line-items?productId=K3SR7PBX&quantity=2
