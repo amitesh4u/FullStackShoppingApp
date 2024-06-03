@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {getCart} from "../services/CartService.js";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faMinus, faPlus, faTrashCan} from "@fortawesome/free-solid-svg-icons";
+import {getCart, removeItemFromCart} from "../services/CartService.js";
 
 const CartComponent = () => {
 
@@ -55,6 +53,98 @@ const CartComponent = () => {
       },
       [])
 
+  function handleDeleteItem(e) {
+    let dataset = e.target.dataset;
+    console.log(
+        "Removing Item:" + dataset.productId
+        + "|" + dataset.productQuantity);
+
+    removeItemFromCart(61157, dataset.productId, dataset.productQuantity)
+    .then(response => {
+      console.log("Data received " + JSON.stringify(response.data));
+      setCartItems(response.data)
+    })
+    .catch(error => console.log(error))
+  }
+
+  function handleIncrementItem(e) {
+    let datatset = e.target.dataset;
+    //console.log("Incrementing Item:" + datatset.productId + "|" + datatset.index);
+    const newItemList = [...cartItemList.lineItems];
+    let item = newItemList.at(datatset.index);
+    if (item.quantity === 10) {
+      return;
+    }
+    //console.log(JSON.stringify(item));
+    item.quantity++;
+    // console.log(JSON.stringify(item));
+
+    // const newItemList = cartItemList.lineItems?.map(item => {
+    //   if (item.productId === datatset.productId) {
+    //     // Return updated item
+    //     return {
+    //       ...item,
+    //       quantity: item.quantity + 1,
+    //     };
+    //   } else {
+    //     return item;
+    //   }
+    // });
+    // console.log("Old list: " + JSON.stringify(cartItemList));
+    // console.log("New list: " + JSON.stringify(newItemList));
+    let newNumberOfItems = cartItemList.numberOfItems + 1;
+    const newAmount = cartItemList.subTotal.amount + item.price.amount;
+    const newCartItemList = {
+      lineItems: newItemList,
+      numberOfItems: newNumberOfItems,
+      subTotal: {...cartItemList.subTotal, amount: newAmount}
+    }
+    //console.log("New list: " + JSON.stringify(newCartItemList));
+    // Re-render with the new array
+    setCartItems(newCartItemList);
+  }
+
+  function handleDecrementItem(e) {
+    let datatset = e.target.dataset;
+    //console.log("Decrementing Item:" + datatset.productId + "|" + datatset.index);
+
+    const newItemList = [...cartItemList.lineItems];
+
+    let item = newItemList.at(datatset.index);
+    if (item.quantity === 1) {
+      return;
+    }
+
+    //console.log(JSON.stringify(item));
+    item.quantity--;
+    // console.log(JSON.stringify(item));
+
+    // const newItemList = cartItemList.lineItems?.map(item => {
+    //   if (item.productId === datatset.productId) {
+    //     // Return updated item
+    //     return {
+    //       ...item,
+    //       quantity: item.quantity - 1,
+    //     };
+    //   } else {
+    //     return item;
+    //   }
+    // });
+    // console.log("Old list: " + JSON.stringify(cartItemList));
+    // console.log("New list: " + JSON.stringify(newItemList));
+    let newNumberOfItems = cartItemList.numberOfItems - 1;
+    const newAmount = cartItemList.subTotal.amount - item.price.amount;
+    const newCartItemList = {
+      lineItems: newItemList,
+      numberOfItems: newNumberOfItems,
+      subTotal: {...cartItemList.subTotal, amount: newAmount}
+    }
+    //console.log("New list: " + JSON.stringify(newCartItemList));
+    // Re-render with the new array
+    setCartItems(newCartItemList);
+  }
+
+  let counter = 0;
   return (
       <div className='container table-responsive'>
         <h1 className="text-center">Cart Item List</h1>
@@ -72,7 +162,7 @@ const CartComponent = () => {
           {
             // Need to verify if obj is null or not before calling map
             // else throws TypeError: Cannot read properties of undefined (reading 'map')
-            cartItemList.lineItems?.map(item =>
+            cartItemList.lineItems?.map((item, index) =>
                 <tr key={item.productId}>
                   <td>{item.productId}</td>
                   <td>{item.productName}</td>
@@ -83,37 +173,31 @@ const CartComponent = () => {
                       margin: '0px auto'
                     }}>
                       <div className="input-group">
-                      <span className="input-group-btn">
-                        <button type="button"
-                                className="quantity-left-minus btn btn-danger btn-number"
-                                data-type="minus" data-field="">
-                          <FontAwesomeIcon icon={faMinus}/>
-                        </button>
-                      </span>
-                        <input type="text" id="quantity" name="quantity"
-                               className="form-control input-number"
-                               value={item.quantity}
-                               min="0" max={item.quantity} size="1"/>
                         <span className="input-group-btn">
-                        <button type="button"
-                                className="quantity-right-plus btn btn-success btn-number"
-                                data-type="plus" data-field="">
-                          <FontAwesomeIcon icon={faPlus}/>
-                        </button>
-                      </span>
+                            <i className="fa-solid fa-minus app-decr-icon"
+                               data-product-id={item.productId}
+                               data-index={index}
+                               onClick={handleDecrementItem}/>
+                        </span>
+                        <p className="px-3 py-1">{item.quantity}</p>
+                        <span className="input-group-btn">
+                            <i className="fa-solid fa-plus app-incr-icon"
+                               data-product-id={item.productId}
+                               data-index={index}
+                               onClick={handleIncrementItem}/>
+                        </span>
                       </div>
                     </div>
                   </td>
                   <td>{item.price.currency} {(item.quantity
                       * item.price.amount).toFixed(2)}</td>
                   <td>
-                    <a className="nav-link" href="#">
-                    <FontAwesomeIcon icon={faTrashCan} style={{
-                        paddingRight: '5px',
-                        fontSize: '20px',
-                        color: "rgb(200, 50, 50)"
-                      }}/>
-                    </a>
+                    <span title="Remove Product from Cart">
+                      <i className="fa-solid fa-trash-can app-trash-icon"
+                         data-product-id={item.productId}
+                         data-product-quantity={item.quantity}
+                         onClick={handleDeleteItem}></i>
+                    </span>
                   </td>
                 </tr>
             )
@@ -122,7 +206,9 @@ const CartComponent = () => {
         </table>
         <div>
           <p><b>Total Quantity: {cartItemList.numberOfItems}</b></p>
-          <p><b>Total Price: {cartItemList.subTotal?.currency} {cartItemList.subTotal?.amount}</b>
+          <p><b>Total
+            Price: {cartItemList.subTotal?.currency} {cartItemList.subTotal?.amount.toFixed(
+                2)}</b>
           </p>
         </div>
       </div>
