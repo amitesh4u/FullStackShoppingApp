@@ -94,14 +94,17 @@ const AddProductComponent = () => {
                          className="form-control"
                          onChange={handleProductPrice}/>
                 </div>
-                <div className="row pt-4">
-                  <span className="col-md-4 offset-md-2">
-                    <button className="btn btn-primary" type="submit">
+                <div className="row justify-content-evenly">
+                  <span className="col-4">
+                    <button className="btn btn-primary"
+                            style={{minWidth: '120px'}}
+                            type="submit">
                     Add Product
                     </button>
-                    </span>
-                  <span className="col-md-4">
+                  </span>
+                  <span className="col-4">
                     <button className="btn btn-primary"
+                            style={{minWidth: '140px'}}
                             onClick={showProductList}>
                     Show Products
                   </button>
