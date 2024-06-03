@@ -3,6 +3,7 @@ package com.amitesh.shop.adapter.out.persistence.inmemory;
 import com.amitesh.shop.application.port.out.persistence.CartRepository;
 import com.amitesh.shop.model.cart.Cart;
 import com.amitesh.shop.model.customer.CustomerId;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -23,6 +24,11 @@ public class InMemoryCartRepository implements CartRepository {
   @Override
   public Optional<Cart> findByCustomerId(CustomerId customerId) {
     return Optional.ofNullable(carts.get(customerId));
+  }
+
+  @Override
+  public List<Cart> findAll() {
+    return carts.values().stream().toList();
   }
 
   @Override

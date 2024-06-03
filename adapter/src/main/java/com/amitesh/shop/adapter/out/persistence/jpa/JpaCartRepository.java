@@ -3,6 +3,7 @@ package com.amitesh.shop.adapter.out.persistence.jpa;
 import com.amitesh.shop.application.port.out.persistence.CartRepository;
 import com.amitesh.shop.model.cart.Cart;
 import com.amitesh.shop.model.customer.CustomerId;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Repository;
@@ -29,6 +30,12 @@ public class JpaCartRepository implements CartRepository {
   public Optional<Cart> findByCustomerId(final CustomerId customerId) {
     Optional<CartJpaEntity> cartJpaEntity = springDataRepository.findById(customerId.value());
     return cartJpaEntity.map(CartMapper::toModelEntity);
+  }
+
+  @Override
+  public List<Cart> findAll() {
+    List<CartJpaEntity> cartJpaEntities = springDataRepository.findAll();
+    return cartJpaEntities.stream().map(CartMapper::toModelEntity).toList();
   }
 
   @Override

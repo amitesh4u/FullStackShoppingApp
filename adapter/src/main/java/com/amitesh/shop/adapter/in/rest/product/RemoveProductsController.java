@@ -4,6 +4,7 @@ import static com.amitesh.shop.adapter.in.rest.common.ControllerHelper.clientErr
 import static com.amitesh.shop.adapter.in.rest.common.ControllerHelper.parseProductId;
 
 import com.amitesh.shop.adapter.in.rest.common.ClientErrorException;
+import com.amitesh.shop.application.port.in.cart.ItemInCartException;
 import com.amitesh.shop.application.port.in.cart.ProductNotFoundException;
 import com.amitesh.shop.application.port.in.product.RemoveProductsUseCase;
 import com.amitesh.shop.model.product.ProductId;
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/products")
 @CustomLog
-@ApiResponse(responseCode = "400", description = "Missing or Invalid Product Id or The requested product does not exist",
+@ApiResponse(responseCode = "400", description = "Missing or Invalid Product Id or The requested product does not exist or The requested product is present in a Cart",
     content = @Content(mediaType = "application/json",
         schema = @Schema(implementation = ClientErrorException.class)))
 @ApiResponse(responseCode = "500", description = "Internal server error. Please Try later", content = @Content)
@@ -50,6 +51,10 @@ public class RemoveProductsController {
       LOGGER.error("The requested product does not exist: " + productIdString);
       throw clientErrorException(
           HttpStatus.BAD_REQUEST, "The requested product does not exist");
+    } catch (ItemInCartException e) {
+      LOGGER.error("The requested product is present in a cart: " + productIdString);
+      throw clientErrorException(
+          HttpStatus.BAD_REQUEST, "The requested product is present in a Cart");
     }
 
   }
