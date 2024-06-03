@@ -1,5 +1,9 @@
 import React, {useEffect, useState} from 'react'
-import {getCart, removeItemFromCart} from "../services/CartService.js";
+import {
+  addItemToCart,
+  getCart,
+  removeItemFromCart
+} from "../services/CartService.js";
 
 const CartComponent = () => {
 
@@ -75,33 +79,39 @@ const CartComponent = () => {
     if (item.quantity === 10) {
       return;
     }
-    //console.log(JSON.stringify(item));
-    item.quantity++;
-    // console.log(JSON.stringify(item));
+    // //console.log(JSON.stringify(item));
+    // item.quantity++;
+    // // console.log(JSON.stringify(item));
 
-    // const newItemList = cartItemList.lineItems?.map(item => {
-    //   if (item.productId === datatset.productId) {
-    //     // Return updated item
-    //     return {
-    //       ...item,
-    //       quantity: item.quantity + 1,
-    //     };
-    //   } else {
-    //     return item;
-    //   }
-    // });
-    // console.log("Old list: " + JSON.stringify(cartItemList));
-    // console.log("New list: " + JSON.stringify(newItemList));
-    let newNumberOfItems = cartItemList.numberOfItems + 1;
-    const newAmount = cartItemList.subTotal.amount + item.price.amount;
-    const newCartItemList = {
-      lineItems: newItemList,
-      numberOfItems: newNumberOfItems,
-      subTotal: {...cartItemList.subTotal, amount: newAmount}
-    }
-    //console.log("New list: " + JSON.stringify(newCartItemList));
-    // Re-render with the new array
-    setCartItems(newCartItemList);
+    addItemToCart(61157, datatset.productId, 1)
+    .then(response => {
+      console.log("Data received " + JSON.stringify(response.data));
+      setCartItems(response.data)
+    }).catch(error => console.log(error))
+
+    // // const newItemList = cartItemList.lineItems?.map(item => {
+    // //   if (item.productId === datatset.productId) {
+    // //     // Return updated item
+    // //     return {
+    // //       ...item,
+    // //       quantity: item.quantity + 1,
+    // //     };
+    // //   } else {
+    // //     return item;
+    // //   }
+    // // });
+    // // console.log("Old list: " + JSON.stringify(cartItemList));
+    // // console.log("New list: " + JSON.stringify(newItemList));
+    // let newNumberOfItems = cartItemList.numberOfItems + 1;
+    // const newAmount = cartItemList.subTotal.amount + item.price.amount;
+    // const newCartItemList = {
+    //   lineItems: newItemList,
+    //   numberOfItems: newNumberOfItems,
+    //   subTotal: {...cartItemList.subTotal, amount: newAmount}
+    // }
+    // //console.log("New list: " + JSON.stringify(newCartItemList));
+    // // Re-render with the new array
+    // setCartItems(newCartItemList);
   }
 
   function handleDecrementItem(e) {
@@ -119,29 +129,35 @@ const CartComponent = () => {
     item.quantity--;
     // console.log(JSON.stringify(item));
 
-    // const newItemList = cartItemList.lineItems?.map(item => {
-    //   if (item.productId === datatset.productId) {
-    //     // Return updated item
-    //     return {
-    //       ...item,
-    //       quantity: item.quantity - 1,
-    //     };
-    //   } else {
-    //     return item;
-    //   }
-    // });
-    // console.log("Old list: " + JSON.stringify(cartItemList));
-    // console.log("New list: " + JSON.stringify(newItemList));
-    let newNumberOfItems = cartItemList.numberOfItems - 1;
-    const newAmount = cartItemList.subTotal.amount - item.price.amount;
-    const newCartItemList = {
-      lineItems: newItemList,
-      numberOfItems: newNumberOfItems,
-      subTotal: {...cartItemList.subTotal, amount: newAmount}
-    }
-    //console.log("New list: " + JSON.stringify(newCartItemList));
-    // Re-render with the new array
-    setCartItems(newCartItemList);
+    removeItemFromCart(61157, datatset.productId, 1)
+    .then(response => {
+      console.log("Data received " + JSON.stringify(response.data));
+      setCartItems(response.data)
+    }).catch(error => console.log(error))
+
+    // // const newItemList = cartItemList.lineItems?.map(item => {
+    // //   if (item.productId === datatset.productId) {
+    // //     // Return updated item
+    // //     return {
+    // //       ...item,
+    // //       quantity: item.quantity - 1,
+    // //     };
+    // //   } else {
+    // //     return item;
+    // //   }
+    // // });
+    // // console.log("Old list: " + JSON.stringify(cartItemList));
+    // // console.log("New list: " + JSON.stringify(newItemList));
+    // let newNumberOfItems = cartItemList.numberOfItems - 1;
+    // const newAmount = cartItemList.subTotal.amount - item.price.amount;
+    // const newCartItemList = {
+    //   lineItems: newItemList,
+    //   numberOfItems: newNumberOfItems,
+    //   subTotal: {...cartItemList.subTotal, amount: newAmount}
+    // }
+    // //console.log("New list: " + JSON.stringify(newCartItemList));
+    // // Re-render with the new array
+    // setCartItems(newCartItemList);
   }
 
   let counter = 0;
