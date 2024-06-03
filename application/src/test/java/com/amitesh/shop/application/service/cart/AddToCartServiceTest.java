@@ -17,6 +17,7 @@ import com.amitesh.shop.application.port.out.persistence.ProductRepository;
 import com.amitesh.shop.model.cart.Cart;
 import com.amitesh.shop.model.cart.CartLineItem;
 import com.amitesh.shop.model.cart.InsufficientStockException;
+import com.amitesh.shop.model.cart.MaximumItemInCartException;
 import com.amitesh.shop.model.product.ProductId;
 import java.util.List;
 import java.util.Optional;
@@ -46,7 +47,7 @@ class AddToCartServiceTest {
 
   @Test
   void testAddToCart_existingCart_addProductToCart_returnUpdatedCart()
-      throws InsufficientStockException, ProductNotFoundException {
+      throws InsufficientStockException, ProductNotFoundException, MaximumItemInCartException {
     Cart persistedCart = new Cart(TEST_CUSTOMER_ID);
     persistedCart.addProduct(TEST_PRODUCT_1, 1);
 
@@ -69,7 +70,7 @@ class AddToCartServiceTest {
 
   @Test
   void testAddToCart_noExistingCart_addProductsToCart_returnUpdatedCart()
-      throws InsufficientStockException, ProductNotFoundException {
+      throws InsufficientStockException, ProductNotFoundException, MaximumItemInCartException {
     when(productRepository.findById(TEST_PRODUCT_1.id())).thenReturn(Optional.of(TEST_PRODUCT_1));
 
     Cart cart = addToCartService.addToCart(TEST_CUSTOMER_ID, TEST_PRODUCT_1.id(), 2);

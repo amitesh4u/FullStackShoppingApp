@@ -13,6 +13,7 @@ import static org.mockito.Mockito.when;
 import com.amitesh.shop.application.port.out.persistence.CartRepository;
 import com.amitesh.shop.model.cart.Cart;
 import com.amitesh.shop.model.cart.InsufficientStockException;
+import com.amitesh.shop.model.cart.MaximumItemInCartException;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,7 +41,8 @@ class GetCartServiceTest {
   }
 
   @Test
-  void testGetCart_cartIsPersisted_returnsCart() throws InsufficientStockException {
+  void testGetCart_cartIsPersisted_returnsCart()
+      throws InsufficientStockException, MaximumItemInCartException {
     Cart persistedCart = new Cart(TEST_CUSTOMER_ID);
     persistedCart.addProduct(TEST_PRODUCT_1, 1);
     persistedCart.addProduct(TEST_PRODUCT_2, 5);

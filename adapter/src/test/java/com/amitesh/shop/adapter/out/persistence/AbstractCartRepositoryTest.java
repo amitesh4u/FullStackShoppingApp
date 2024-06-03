@@ -10,6 +10,7 @@ import com.amitesh.shop.application.port.out.persistence.ProductRepository;
 import com.amitesh.shop.model.cart.Cart;
 import com.amitesh.shop.model.cart.CartLineItem;
 import com.amitesh.shop.model.cart.InsufficientStockException;
+import com.amitesh.shop.model.cart.MaximumItemInCartException;
 import com.amitesh.shop.model.customer.CustomerId;
 import com.amitesh.shop.model.product.Product;
 import java.util.Optional;
@@ -58,7 +59,7 @@ public abstract class AbstractCartRepositoryTest {
 
   @Test
   void testFindByCustomerId_givenPersistedCartWithProduct_returnsTheAppropriateCart()
-      throws InsufficientStockException {
+      throws InsufficientStockException, MaximumItemInCartException {
     CustomerId customerId = createUniqueCustomerId();
 
     Cart persistedCart = new Cart(customerId);
@@ -76,7 +77,7 @@ public abstract class AbstractCartRepositoryTest {
 
   @Test
   void testSave_givenExistingCartWithProduct_andGivenANewCartForTheSameCustomer_overwritesTheExistingCart()
-      throws InsufficientStockException {
+      throws InsufficientStockException, MaximumItemInCartException {
     CustomerId customerId = createUniqueCustomerId();
 
     Cart existingCart = new Cart(customerId);
@@ -97,7 +98,7 @@ public abstract class AbstractCartRepositoryTest {
 
   @Test
   void testSave_givenExistingCartWithProduct_addProductAndSaveCart_updatesTheExistingCart()
-      throws InsufficientStockException {
+      throws InsufficientStockException, MaximumItemInCartException {
     CustomerId customerId = createUniqueCustomerId();
 
     Cart existingCart = new Cart(customerId);

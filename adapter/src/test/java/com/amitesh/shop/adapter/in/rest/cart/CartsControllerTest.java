@@ -19,6 +19,7 @@ import com.amitesh.shop.application.port.in.cart.GetCartUseCase;
 import com.amitesh.shop.application.port.in.cart.ProductNotFoundException;
 import com.amitesh.shop.model.cart.Cart;
 import com.amitesh.shop.model.cart.InsufficientStockException;
+import com.amitesh.shop.model.cart.MaximumItemInCartException;
 import com.amitesh.shop.model.product.ProductId;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Disabled;
@@ -58,7 +59,7 @@ class CartsControllerTest {
 
   @Test
   void testGetCart_givenAValidCustomerIdAndACart_invokesGetCartUseCaseAndRequestsCartFromUseCaseAndReturnsIt()
-      throws InsufficientStockException {
+      throws InsufficientStockException, MaximumItemInCartException {
 
     Cart cart = new Cart(TEST_CUSTOMER_ID);
     cart.addProduct(TEST_PRODUCT_1, 3);
@@ -75,7 +76,7 @@ class CartsControllerTest {
 
   @Test
   void testAddToCart_givenSomeTestData_invokesAddToCartUseCaseAndReturnsUpdatedCart()
-      throws InsufficientStockException, ProductNotFoundException {
+      throws InsufficientStockException, ProductNotFoundException, MaximumItemInCartException {
     ProductId productId = TEST_PRODUCT_1.id();
     int quantity = 5;
 
@@ -117,7 +118,7 @@ class CartsControllerTest {
 
   @Test
   void testAddToCart_givenProductNotFound_invokesAddToCartUseCaseAndReturnsAnError()
-      throws InsufficientStockException, ProductNotFoundException {
+      throws InsufficientStockException, ProductNotFoundException, MaximumItemInCartException {
     ProductId productId = randomProductId();
     int quantity = 5;
 
@@ -139,7 +140,7 @@ class CartsControllerTest {
 
   @Test
   void testAddToCart_givenNotEnoughItemsInStock_invokesAddToCartUseCaseAndReturnsAnError()
-      throws InsufficientStockException, ProductNotFoundException {
+      throws InsufficientStockException, ProductNotFoundException, MaximumItemInCartException {
     ProductId productId = randomProductId();
     int quantity = 5;
 

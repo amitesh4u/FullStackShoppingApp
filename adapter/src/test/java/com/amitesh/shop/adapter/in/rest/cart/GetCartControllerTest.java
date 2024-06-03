@@ -13,6 +13,7 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import com.amitesh.shop.application.port.in.cart.GetCartUseCase;
 import com.amitesh.shop.model.cart.Cart;
 import com.amitesh.shop.model.cart.InsufficientStockException;
+import com.amitesh.shop.model.cart.MaximumItemInCartException;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -44,7 +45,7 @@ class GetCartControllerTest {
 
   @Test
   void testGetCart_givenAValidCustomerIdAndACart_invokesGetCartUseCaseAndRequestsCartFromUseCaseAndReturnsIt()
-      throws InsufficientStockException {
+      throws InsufficientStockException, MaximumItemInCartException {
 
     Cart cart = new Cart(TEST_CUSTOMER_ID);
     cart.addProduct(TEST_PRODUCT_1, 3);

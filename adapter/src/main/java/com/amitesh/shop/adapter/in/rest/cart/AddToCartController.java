@@ -9,6 +9,7 @@ import com.amitesh.shop.application.port.in.cart.AddToCartUseCase;
 import com.amitesh.shop.application.port.in.cart.ProductNotFoundException;
 import com.amitesh.shop.model.cart.Cart;
 import com.amitesh.shop.model.cart.InsufficientStockException;
+import com.amitesh.shop.model.cart.MaximumItemInCartException;
 import com.amitesh.shop.model.customer.CustomerId;
 import com.amitesh.shop.model.product.ProductId;
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,7 +20,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.CustomLog;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,6 +69,10 @@ public class AddToCartController {
       return cartWebModel;
     } catch (ProductNotFoundException e) {
       LOGGER.error("The requested product does not exist: " + productIdString);
+      throw clientErrorException(
+          HttpStatus.BAD_REQUEST, "The requested product does not exist");
+    } catch (MaximumItemInCartException e) {
+      LOGGER.error("Only {} items can be added of the product {}", 10, productIdString);
       throw clientErrorException(
           HttpStatus.BAD_REQUEST, "The requested product does not exist");
     } catch (InsufficientStockException e) {

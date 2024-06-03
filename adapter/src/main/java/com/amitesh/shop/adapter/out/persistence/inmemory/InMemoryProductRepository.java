@@ -9,11 +9,13 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import lombok.CustomLog;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Repository;
 
 @ConditionalOnProperty(name = "persistence", havingValue = "inmemory", matchIfMissing = true)
 @Repository
+@CustomLog
 public class InMemoryProductRepository implements ProductRepository {
 
   private final Map<ProductId, Product> products = new ConcurrentHashMap<>();
@@ -27,8 +29,16 @@ public class InMemoryProductRepository implements ProductRepository {
   }
 
   @Override
-  public void save(Product product) {
+  public Product save(Product product) {
+    LOGGER.info("Product {} with Id {}", product, product.id());
     products.put(product.id(), product);
+    return product;
+  }
+
+  @Override
+  public void delete(Product product) {
+    LOGGER.info("Product {} with Id {}", product, product.id());
+    products.remove(product.id());
   }
 
   @Override

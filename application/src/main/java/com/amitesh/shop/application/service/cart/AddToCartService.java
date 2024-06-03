@@ -6,6 +6,7 @@ import com.amitesh.shop.application.port.out.persistence.CartRepository;
 import com.amitesh.shop.application.port.out.persistence.ProductRepository;
 import com.amitesh.shop.model.cart.Cart;
 import com.amitesh.shop.model.cart.InsufficientStockException;
+import com.amitesh.shop.model.cart.MaximumItemInCartException;
 import com.amitesh.shop.model.customer.CustomerId;
 import com.amitesh.shop.model.product.Product;
 import com.amitesh.shop.model.product.ProductId;
@@ -26,7 +27,7 @@ public class AddToCartService implements AddToCartUseCase {
 
   @Override
   public Cart addToCart(CustomerId customerId, ProductId productId, int quantity)
-      throws ProductNotFoundException, InsufficientStockException {
+      throws ProductNotFoundException, InsufficientStockException, MaximumItemInCartException {
 
     if (null == customerId) {
       throw new IllegalArgumentException("'customerId' must not be null");

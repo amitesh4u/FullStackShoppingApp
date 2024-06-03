@@ -23,12 +23,15 @@ public class CartLineItem {
 
   @Synchronized
   public void increaseQuantityBy(final int augend, final int itemsInStock)
-      throws InsufficientStockException {
+      throws InsufficientStockException, MaximumItemInCartException {
     if (augend < 1) {
       throw new IllegalArgumentException("You must add at least one item");
     }
 
     int newQuantity = quantity + augend;
+    if (newQuantity > 10){
+      throw new MaximumItemInCartException();
+    }
     if (itemsInStock < augend) {
       throw new InsufficientStockException(
           "Product %s has less items in stock (%d) than the requested total quantity (%d)"

@@ -28,8 +28,14 @@ public class JpaProductRepository implements ProductRepository {
 
   @Override
   @Transactional
-  public void save(final Product product) {
-    springDataRepository.save(ProductMapper.toJpaEntity(product));
+  public Product save(final Product product) {
+    ProductJpaEntity productJpaEntity = springDataRepository.save(ProductMapper.toJpaEntity(product));
+    return ProductMapper.toModelEntity(productJpaEntity);
+  }
+
+  @Override
+  public void delete(Product product) {
+    springDataRepository.delete(ProductMapper.toJpaEntity(product));
   }
 
   @Override
