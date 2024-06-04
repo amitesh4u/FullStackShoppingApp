@@ -4,7 +4,7 @@ import CartComponent from "./CartComponent.jsx";
 
 function Home() {
   return (
-      <div style={{minHeight: '600px'}}>
+      <div>
         <ListProductComponent/>
         <hr/>
         <CartComponent/>
