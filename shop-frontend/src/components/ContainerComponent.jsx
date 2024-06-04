@@ -2,7 +2,7 @@ import React from 'react'
 
 function ContainerComponent(props) {
   return (
-      <div style={{minHeight:'617px'}}>
+      <div className="app-container">
         {props.component}
       </div>
   )

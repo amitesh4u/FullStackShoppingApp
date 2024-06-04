@@ -31,6 +31,10 @@
   cursor: pointer;
 }
 
+.app-container{
+  min-height: 617px;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
