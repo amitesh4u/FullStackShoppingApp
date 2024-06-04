@@ -1,11 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {findProducts} from "../services/ProductService.js";
-import {
-  useLocation,
-  useNavigate,
-  useParams,
-  useSearchParams
-} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import ProductTable from "./ProductTable.jsx";
 
 const ProductSearchResultComponent = ({route, navigate}) => {

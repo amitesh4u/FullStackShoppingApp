@@ -19,7 +19,7 @@ const HeaderComponent = () => {
     setSearchString('');
 
     /* Passing param internally as state. No change in URL. Use useLocation to fetch */
-    navigator("/search", {state:{query:searchString}});
+    navigator("/search", {state:{query:query}});
 
     /* Passing param as Query. Appear in URL. Use useSearchParam to fetch */
     //navigator(`/search?query=${query}`);
