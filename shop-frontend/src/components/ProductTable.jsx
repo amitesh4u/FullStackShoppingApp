@@ -92,7 +92,7 @@ const ProductTable = props => {
                 <td>{product.itemsInStock}</td>
                 <td>
                   {product.outOfStock ?
-                      <div style={{color: 'red', fontWeight: '500'}}>Out Of
+                      <div className="text-danger">Out Of
                         Stock</div>
                       :
                       <div style={{
@@ -120,7 +120,7 @@ const ProductTable = props => {
                   }
                 </td>
                 <td style={{minWidth: '110px'}}>
-                  <button className="btn btn-sm btn-primary"
+                  <button className="btn btn-primary"
                           type="AddToCart"
                           data-product-id={product.id}
                           data-product-quantity={product.quantity}
@@ -132,7 +132,7 @@ const ProductTable = props => {
                 </td>
                 {props.showDeleteProduct &&
                 <td>
-                    <span title="Remove Product">
+                    <span title="Remove Product" >
                       <i className="fa-solid fa-trash-can  app-trash-icon"
                          data-product-id={product.id}
                          onClick={handleDeleteProduct}

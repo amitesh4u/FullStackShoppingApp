@@ -15,11 +15,17 @@ const HeaderComponent = () => {
   function handleProductSearch(e){
     e.preventDefault();
     console.log("Search: " + searchString);
-    /* Passing param internally as state. Use useLocation to fetch */
-    //navigator("/search", {state:{query:searchString}});
+    let query = searchString;
+    setSearchString('');
 
-    /* Passing param as Query. Use useSearchParam to fetch */
-    navigator(`/search?query=${searchString}`);
+    /* Passing param internally as state. No change in URL. Use useLocation to fetch */
+    navigator("/search", {state:{query:searchString}});
+
+    /* Passing param as Query. Appear in URL. Use useSearchParam to fetch */
+    //navigator(`/search?query=${query}`);
+
+    /* Passing the param as path. Appear in URL. Use useParam to fetch */
+    //navigator(`/search/${query}`);
   }
 
   return (
@@ -51,7 +57,7 @@ const HeaderComponent = () => {
                   <a className="nav-link" href="/about">About</a>
                 </li>
               </ul>
-              <form className="d-flex" role="search">
+              <form className="d-flex col-5 me-lg-5" role="search">
                 <input className="form-control me-2" type="search"
                        placeholder="Search Products (min 3 characters)"
                        value={searchString}
