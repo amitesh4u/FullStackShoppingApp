@@ -3,7 +3,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import HeaderComponent from "./components/HeaderComponent.jsx";
 import FooterComponent from "./components/FooterComponent.jsx";
 import About from "./components/About.jsx";
-import Home from "./components/Home.jsx";
+import HomeComponent from "./components/HomeComponent.jsx";
 import ProductSearchResultComponent
   from "./components/ProductSearchResultComponent.jsx";
 import ContainerComponent from "./components/ContainerComponent.jsx";
@@ -18,7 +18,7 @@ function App() {
         <BrowserRouter>
         <HeaderComponent/>
           <Routes>
-            <Route path="/" element={<ContainerComponent component={<Home/>}/>}></Route>
+            <Route path="/" element={<ContainerComponent component={<HomeComponent/>}/>}></Route>
             <Route path="/about" element={<ContainerComponent component={<About/>}/>}></Route>
             <Route path="/product" element={<ContainerComponent component={<ListProductComponent/>}/>}></Route>
             <Route path="/cart" element={<ContainerComponent component={<CartComponent/>}/>}></Route>

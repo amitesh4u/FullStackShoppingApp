@@ -2,7 +2,7 @@ import React from 'react'
 import ListProductComponent from "./ListProductComponent.jsx";
 import CartComponent from "./CartComponent.jsx";
 
-function Home() {
+function HomeComponent() {
   return (
       <div>
         <ListProductComponent/>
@@ -12,4 +12,4 @@ function Home() {
   )
 }
 
-export default Home
+export default HomeComponent
