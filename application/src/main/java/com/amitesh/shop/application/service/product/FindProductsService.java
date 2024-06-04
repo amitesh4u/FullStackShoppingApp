@@ -3,7 +3,9 @@ package com.amitesh.shop.application.service.product;
 import com.amitesh.shop.application.port.in.product.FindProductsUseCase;
 import com.amitesh.shop.application.port.out.persistence.ProductRepository;
 import com.amitesh.shop.model.product.Product;
+import com.amitesh.shop.model.product.ProductId;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +20,11 @@ public class FindProductsService implements FindProductsUseCase {
   @Override
   public List<Product> findAll() {
     return productRepository.findAll();
+  }
+
+  @Override
+  public Optional<Product> findById(ProductId productId) {
+    return productRepository.findById(productId);
   }
 
   @Override

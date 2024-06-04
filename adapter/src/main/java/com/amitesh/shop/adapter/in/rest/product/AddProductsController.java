@@ -2,6 +2,7 @@ package com.amitesh.shop.adapter.in.rest.product;
 
 import static com.amitesh.shop.adapter.in.rest.common.ControllerHelper.clientErrorException;
 import static com.amitesh.shop.adapter.in.rest.common.ControllerHelper.isValidProduct;
+import static com.amitesh.shop.adapter.in.rest.common.ControllerHelper.parseProductId;
 
 import com.amitesh.shop.adapter.in.rest.common.ClientErrorException;
 import com.amitesh.shop.application.port.in.product.AddProductsUseCase;
@@ -18,6 +19,7 @@ import java.math.BigDecimal;
 import java.util.Currency;
 import lombok.CustomLog;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -66,6 +68,41 @@ public class AddProductsController {
         new Price(Currency.getInstance(currency), new BigDecimal(amount)),
         Integer.parseInt(itemsInStock));
     LOGGER.debug("Adding product" + product);
+    product = addProductsUseCase.save(product);
+
+    ProductInListWebModel productsWebModel = ProductInListWebModel.fromDomainModel(product);
+    LOGGER.debug("Returning product {}", productsWebModel);
+
+    return productsWebModel;
+  }
+
+  @PostMapping("/{productId}")
+  @Operation(
+      operationId = "UpdateProduct",
+      summary = "Update Product",
+      responses = @ApiResponse(responseCode = "200", description = "Added Product is returned",
+          content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProductInListWebModel.class))))
+  public ProductInListWebModel addProduct(
+      @PathVariable(value = "productId") String productIdString,
+      @RequestParam(value = "name") String name,
+      @RequestParam(value = "desc") String description,
+      @RequestParam(value = "qty") String itemsInStock,
+      @RequestParam(value = "amount") String amount,
+      @RequestParam(value = "currency") String currency
+  ) {
+
+    ProductId productId = parseProductId(productIdString);
+
+    if (!isValidProduct(name, description, itemsInStock, amount, currency)) {
+      LOGGER.error("Product details are missing or invalid!!");
+      throw clientErrorException(HttpStatus.BAD_REQUEST, "Invalid/Missing details");
+    }
+
+    Product product = new Product(productId,
+        name, description,
+        new Price(Currency.getInstance(currency), new BigDecimal(amount)),
+        Integer.parseInt(itemsInStock));
+    LOGGER.debug("Updating product" + product);
     product = addProductsUseCase.save(product);
 
     ProductInListWebModel productsWebModel = ProductInListWebModel.fromDomainModel(product);

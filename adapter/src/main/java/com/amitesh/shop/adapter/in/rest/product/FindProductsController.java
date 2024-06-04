@@ -1,10 +1,12 @@
 package com.amitesh.shop.adapter.in.rest.product;
 
 import static com.amitesh.shop.adapter.in.rest.common.ControllerHelper.clientErrorException;
+import static com.amitesh.shop.adapter.in.rest.common.ControllerHelper.parseProductId;
 
 import com.amitesh.shop.adapter.in.rest.common.ClientErrorException;
 import com.amitesh.shop.application.port.in.product.FindProductsUseCase;
 import com.amitesh.shop.model.product.Product;
+import com.amitesh.shop.model.product.ProductId;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -13,8 +15,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.CustomLog;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -80,6 +82,29 @@ public class FindProductsController {
         .map(ProductInListWebModel::fromDomainModel)
         .toList();
     LOGGER.debug("Returning all Products {}", productsWebModel);
+
+    return productsWebModel;
+  }
+
+  @GetMapping("/{productId}")
+  @Operation(
+      operationId = "Find Product by Id",
+      summary = "Find Product by Id",
+      responses = @ApiResponse(responseCode = "200", description = "Available Product is returned",
+          content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProductInListWebModel.class))))
+  public ProductInListWebModel findProductById(@PathVariable("productId") String productIdString) {
+
+    LOGGER.debug("Finding Product by id " + productIdString);
+    ProductId productId = parseProductId(productIdString);
+
+    Product product = findProductsUseCase.findById(productId).orElse(null);
+    if (null == product) {
+      LOGGER.error("The requested product does not exist: " + productIdString);
+      throw clientErrorException(
+          HttpStatus.BAD_REQUEST, "The requested product does not exist");
+    }
+    ProductInListWebModel productsWebModel = ProductInListWebModel.fromDomainModel(product);
+    LOGGER.debug("Returning Product {}", productsWebModel);
 
     return productsWebModel;
   }

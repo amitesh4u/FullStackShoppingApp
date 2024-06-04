@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.CustomLog;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,13 +37,13 @@ public class RemoveProductsController {
     this.removeProductsUseCase = removeProductsUseCase;
   }
 
-  @DeleteMapping
+  @DeleteMapping("/{productId}")
   @Operation(
       operationId = "RemoveProduct",
       summary = "Remove Product",
       responses = @ApiResponse(responseCode = "200", description = "OK"))
   public void removeProduct(
-      @RequestParam(value = "productId") String productIdString) {
+      @PathVariable(value = "productId") String productIdString) {
     ProductId productId = parseProductId(productIdString);
     LOGGER.debug("Removing product" + productId);
     try {
