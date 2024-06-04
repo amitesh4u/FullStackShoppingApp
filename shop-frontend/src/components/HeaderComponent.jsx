@@ -1,8 +1,27 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCartShopping, faSignIn, faUser } from '@fortawesome/free-solid-svg-icons';
+import {useNavigate} from "react-router-dom";
+import {
+  faCartShopping,
+  faSignIn,
+  faUser
+} from '@fortawesome/free-solid-svg-icons';
 
 const HeaderComponent = () => {
+
+  const [searchString, setSearchString] = useState('')
+
+  const navigator  = useNavigate();
+  function handleProductSearch(e){
+    e.preventDefault();
+    console.log("Search: " + searchString);
+    /* Passing param internally as state. Use useLocation to fetch */
+    //navigator("/search", {state:{query:searchString}});
+
+    /* Passing param as Query. Use useSearchParam to fetch */
+    navigator(`/search?query=${searchString}`);
+  }
+
   return (
       <header className="text-light">
         <nav className="navbar navbar-expand-lg bg-primary"
@@ -34,8 +53,13 @@ const HeaderComponent = () => {
               </ul>
               <form className="d-flex" role="search">
                 <input className="form-control me-2" type="search"
-                       placeholder="Search" aria-label="Search"/>
-                <button className="btn btn-outline-light" type="submit">Search
+                       placeholder="Search Products (min 3 characters)"
+                       value={searchString}
+                       required
+                       onChange={e => setSearchString(e.target.value)}
+                       aria-label="Search"/>
+                <button className="btn btn-outline-light" type="submit"
+                        onClick={handleProductSearch}>Search
                 </button>
               </form>
               <ul className="nav navbar-nav navbar-right">
