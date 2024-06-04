@@ -79,7 +79,7 @@ const ProductTable = props => {
     setShow(true);
   }
 
-  function handleDeleteProduct(e) {
+  function handleDeleteProduct() {
     console.log("Removing Product:" + productIdTBD)
     handleClose()
 

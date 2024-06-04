@@ -3,7 +3,7 @@ import {findProducts} from "../services/ProductService.js";
 import {useLocation, useNavigate} from "react-router-dom";
 import ProductTable from "./ProductTable.jsx";
 
-const ProductSearchResultComponent = ({route, navigate}) => {
+const ProductSearchResultComponent = () => {
 
   const location = useLocation();
   let query = location.state.query;
