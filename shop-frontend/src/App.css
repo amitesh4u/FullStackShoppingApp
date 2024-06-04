@@ -38,6 +38,9 @@
   cursor: pointer;
 }
 
+.app-warning-icon{
+  color: rgb(200, 50, 50);
+}
 .app-container{
   min-height: 617px;
 }

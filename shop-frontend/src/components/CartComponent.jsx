@@ -4,6 +4,7 @@ import {
   getCart,
   removeItemFromCart
 } from "../services/CartService.js";
+import ConfirmationModalComponent from "./ConfirmationModalComponent.jsx";
 
 const CartComponent = () => {
 
@@ -56,20 +57,6 @@ const CartComponent = () => {
         .catch(error => console.log(error))
       },
       [])
-
-  function handleDeleteItem(e) {
-    let dataset = e.target.dataset;
-    console.log(
-        "Removing Item:" + dataset.productId
-        + "|" + dataset.productQuantity);
-
-    removeItemFromCart(61157, dataset.productId, dataset.productQuantity)
-    .then(response => {
-      console.log("Data received " + JSON.stringify(response.data));
-      setCartItems(response.data)
-    })
-    .catch(error => console.log(error))
-  }
 
   function handleIncrementItem(e) {
     let datatset = e.target.dataset;
@@ -160,73 +147,106 @@ const CartComponent = () => {
     // setCartItems(newCartItemList);
   }
 
-  let counter = 0;
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+
+  const [productIdTBD, setProductIdTBD] = useState('')
+  const [quantityTBD, setQuantityTBD] = useState('')
+
+  const handleConfirmationModalShow = (e) => {
+    setProductIdTBD(e.target.dataset.productId);
+    setQuantityTBD(e.target.dataset.productQuantity);
+    setShow(true);
+  }
+
+  const handleDeleteItem = () => {
+    //let dataset = e.target.dataset;
+    // console.log(
+    //     "Removing Item:" + dataset.productId
+    //     + "|" + dataset.productQuantity);
+    handleClose();
+    console.log(productIdTBD + '|' + quantityTBD)
+    removeItemFromCart(61157, productIdTBD, quantityTBD)
+    .then(response => {
+      console.log("Data received " + JSON.stringify(response.data));
+      setCartItems(response.data)
+    })
+    .catch(error => console.log(error))
+  }
+
   return (
-      <div className='container table-responsive'>
-        <h1 className="text-center">Cart Item List</h1>
-        <table className="table table-striped table-bordered">
-          <thead>
-          <tr>
-            <th>Product Id</th>
-            <th>Product Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Sub Total</th>
-          </tr>
-          </thead>
-          <tbody>
-          {
-            // Need to verify if obj is null or not before calling map
-            // else throws TypeError: Cannot read properties of undefined (reading 'map')
-            cartItemList.lineItems?.map((item, index) =>
-                <tr key={item.productId}>
-                  <td>{item.productId}</td>
-                  <td>{item.productName}</td>
-                  <td>{item.price.currency} {item.price.amount}</td>
-                  <td>
-                    <div style={{
-                      width: '150px',
-                      margin: '0px auto'
-                    }}>
-                      <div className="input-group">
+      <div>
+        <div className='container table-responsive'>
+          <h1 className="text-center">Cart Item List</h1>
+          <table className="table table-striped table-bordered">
+            <thead>
+            <tr>
+              <th>Product Id</th>
+              <th>Product Name</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Sub Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            {
+              // Need to verify if obj is null or not before calling map
+              // else throws TypeError: Cannot read properties of undefined (reading 'map')
+              cartItemList.lineItems?.map((item, index) =>
+                  <tr key={item.productId}>
+                    <td>{item.productId}</td>
+                    <td>{item.productName}</td>
+                    <td>{item.price.currency} {item.price.amount}</td>
+                    <td>
+                      <div style={{
+                        width: '150px',
+                        margin: '0px auto'
+                      }}>
+                        <div className="input-group">
                         <span className="input-group-btn">
                             <i className="fa-solid fa-minus app-decr-icon"
                                data-product-id={item.productId}
                                data-index={index}
                                onClick={handleDecrementItem}/>
                         </span>
-                        <p className="px-3 py-1">{item.quantity}</p>
-                        <span className="input-group-btn">
+                          <p className="px-3 py-1">{item.quantity}</p>
+                          <span className="input-group-btn">
                             <i className="fa-solid fa-plus app-incr-icon"
                                data-product-id={item.productId}
                                data-index={index}
                                onClick={handleIncrementItem}/>
                         </span>
+                        </div>
                       </div>
-                    </div>
-                  </td>
-                  <td>{item.price.currency} {(item.quantity
-                      * item.price.amount).toFixed(2)}</td>
-                  <td>
+                    </td>
+                    <td>{item.price.currency} {(item.quantity
+                        * item.price.amount).toFixed(2)}</td>
+                    <td>
                     <span title="Remove Product from Cart">
                       <i className="fa-solid fa-trash-can app-trash-icon"
                          data-product-id={item.productId}
                          data-product-quantity={item.quantity}
-                         onClick={handleDeleteItem}></i>
+                         onClick={handleConfirmationModalShow}
+                      ></i>
                     </span>
-                  </td>
-                </tr>
-            )
-          }
-          </tbody>
-        </table>
-        <div>
-          <p><b>Total Quantity: {cartItemList.numberOfItems}</b></p>
-          <p><b>Total
-            Price: {cartItemList.subTotal?.currency} {cartItemList.subTotal?.amount.toFixed(
-                2)}</b>
-          </p>
+                    </td>
+                  </tr>
+              )
+            }
+            </tbody>
+          </table>
+          <div>
+            <p><b>Total Quantity: {cartItemList.numberOfItems}</b></p>
+            <p><b>Total
+              Price: {cartItemList.subTotal?.currency} {cartItemList.subTotal?.amount.toFixed(
+                  2)}</b>
+            </p>
+          </div>
         </div>
+        <ConfirmationModalComponent show={show} handleClose={handleClose}
+                                    title={'Cart Item removal confirmation!'}
+                                    body={'Do you really want to remove this Item from Cart?'}
+                                    handleConfirmation={handleDeleteItem}/>
       </div>
   )
 }
