@@ -9,7 +9,7 @@ import ProductSearchResultComponent
 import ContainerComponent from "./components/ContainerComponent.jsx";
 import CartComponent from "./components/CartComponent.jsx";
 import ListProductComponent from "./components/ListProductComponent.jsx";
-import AddProductComponent from "./components/AddProductComponent.jsx";
+import ManageProductComponent from "./components/ManageProductComponent.jsx";
 
 function App() {
 
@@ -22,7 +22,8 @@ function App() {
             <Route path="/about" element={<ContainerComponent component={<About/>}/>}></Route>
             <Route path="/product" element={<ContainerComponent component={<ListProductComponent/>}/>}></Route>
             <Route path="/cart" element={<ContainerComponent component={<CartComponent/>}/>}></Route>
-            <Route path="/addProduct" element={<ContainerComponent component={<AddProductComponent/>}/>}></Route>
+            <Route path="/addProduct" element={<ContainerComponent component={<ManageProductComponent/>}/>}></Route>
+            <Route path="/updateProduct/:productId" element={<ContainerComponent component={<ManageProductComponent/>}/>}></Route>
             <Route path="/search" element={<ContainerComponent component={<ProductSearchResultComponent/>}/>}></Route>
           </Routes>
         <FooterComponent/>

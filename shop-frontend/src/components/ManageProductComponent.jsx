@@ -1,13 +1,38 @@
-import React, {useState} from 'react'
-import {addProduct} from "../services/ProductService.js";
-import {useNavigate} from "react-router-dom";
+import React, {useEffect, useState} from 'react'
+import {
+  addProduct,
+  findProduct,
+  updateProduct
+} from "../services/ProductService.js";
+import {useNavigate, useParams} from "react-router-dom";
 
-const AddProductComponent = () => {
+const ManageProductComponent = () => {
   const [name, setName] = useState('')
   const [desc, setDesc] = useState('')
   const [quantity, setQuantity] = useState('')
   const [price, setPrice] = useState('')
   const [currency, setCurrency] = useState('INR')
+
+  const {productId} = useParams();
+  console.log("ProductId: " + productId);
+
+  useEffect(() => {
+        if (productId) {
+          findProduct(productId)
+          .then(response => {
+            console.log("Data received " + JSON.stringify(response.data));
+            let product = response.data;
+            setName(product.name);
+            setDesc(product.description)
+            setQuantity(product.itemsInStock)
+            setCurrency(product.price.currency)
+            setPrice(product.price.amount)
+          })
+          .catch(error => console.log(error))
+        }
+      },
+      []
+  )
 
   /* Lambda style */
   const handleProductName = (e) => setName(e.target.value);
@@ -38,6 +63,18 @@ const AddProductComponent = () => {
     .catch(error => console.log(error))
   }
 
+  function updateNewProduct(e) {
+    e.preventDefault();
+    console.log(productId + "|" +
+        name + "|" + desc + "|" + quantity + "|" + currency + "|" + price);
+    updateProduct(productId, name, desc, quantity, currency, price).then(
+        response => {
+          console.log("Data received " + JSON.stringify(response.data));
+          showProductList();
+        })
+    .catch(error => console.log(error))
+  }
+
   const navigator = useNavigate();
 
   function showProductList() {
@@ -48,9 +85,11 @@ const AddProductComponent = () => {
       <div className="container">
         <div className="row">
           <div className="card col-md-6 offset-md-3 offset-md-3">
-            <h2 className="text-center"> Add Product</h2>
+            <h2 className="text-center"> {productId ? 'Update'
+                : 'Add'} Product</h2>
             <div className="card-body">
-              <form onSubmit={addNewProduct} id="Add Product Form">
+              <form onSubmit={productId ? updateNewProduct : addNewProduct}
+                    id="Add Product Form">
                 <div className="form-group mb-2">
                   <label className="form-label"> Product Name:</label>
                   <input type="text" maxLength="50" required="required"
@@ -99,7 +138,7 @@ const AddProductComponent = () => {
                     <button className="btn btn-primary"
                             style={{minWidth: '120px'}}
                             type="submit">
-                    Add Product
+                    {productId ? 'Update' : 'Add'} Product
                     </button>
                   </span>
                   <span className="col-4">
@@ -117,4 +156,4 @@ const AddProductComponent = () => {
       </div>
   )
 }
-export default AddProductComponent
+export default ManageProductComponent

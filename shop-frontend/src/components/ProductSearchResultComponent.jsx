@@ -78,7 +78,9 @@ const ProductSearchResultComponent = ({route, navigate}) => {
 
         <ProductTable productList={productList}
                       setProducts={setProducts}
-                      showDeleteProduct={false}/>
+                      showDeleteProduct={false}
+                      showUpdateProduct={false}
+        />
 
       </div>
   )

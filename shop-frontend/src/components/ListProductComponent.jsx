@@ -81,7 +81,9 @@ const ListProductComponent = () => {
         </div>
         <ProductTable productList={productList}
                       setProducts={setProducts}
-                      showDeleteProduct={true}/>
+                      showDeleteProduct={true}
+                      showUpdateProduct={true}
+        />
 
       </div>
   )

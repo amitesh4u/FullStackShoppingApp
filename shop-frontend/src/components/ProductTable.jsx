@@ -1,6 +1,7 @@
 import React from 'react'
 import {addItemToCart} from "../services/CartService.js";
 import {removeProduct} from "../services/ProductService.js";
+import {useNavigate} from "react-router-dom";
 
 const ProductTable = props => {
 
@@ -35,6 +36,14 @@ const ProductTable = props => {
           a.id !== productId))
     })
     .catch(error => console.log(error))
+  }
+
+  const navigator = useNavigate();
+  function  handleUpdateProduct(e){
+    let productId = e.target.dataset.productId;
+    console.log("Updating Product:" + productId);
+
+    navigator(`/updateProduct/${productId}`);
   }
 
   function handleDecrementItem(e) {
@@ -119,8 +128,9 @@ const ProductTable = props => {
                       </div>
                   }
                 </td>
-                <td style={{minWidth: '110px'}}>
-                  <button className="btn btn-primary"
+                <td>
+                  <button className="btn btn-sm btn-primary"
+                          style={{minWidth: '110px'}}
                           type="AddToCart"
                           data-product-id={product.id}
                           data-product-quantity={product.quantity}
@@ -130,10 +140,20 @@ const ProductTable = props => {
                     Add To Cart
                   </button>
                 </td>
+                {props.showUpdateProduct &&
+                    <td>
+                    <span title="Update Product" >
+                      <i className="fa-solid fa-pen-to-square app-edit-icon"
+                         data-product-id={product.id}
+                         onClick={handleUpdateProduct}
+                      ></i>
+                    </span>
+                    </td>
+                }
                 {props.showDeleteProduct &&
                 <td>
                     <span title="Remove Product" >
-                      <i className="fa-solid fa-trash-can  app-trash-icon"
+                      <i className="fa-solid fa-trash-can app-trash-icon"
                          data-product-id={product.id}
                          onClick={handleDeleteProduct}
                       ></i>
