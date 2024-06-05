@@ -38,9 +38,33 @@
   cursor: pointer;
 }
 
+.app-success-icon{
+  color: rgb(20, 110, 70);
+}
+
 .app-warning-icon{
+  color: rgb(227, 101, 32);
+}
+
+.app-err-icon{
   color: rgb(200, 50, 50);
 }
+
+.app-msg-icon{
+  padding-right: 1rem;
+  font-size: 20px;
+}
+
+.app-msg-close-icon {
+  cursor: pointer;
+  color: rgb(5,44,101);
+  margin-top: .25rem;
+  margin-right: 1rem;
+  float: right;
+  font-size: 1.5rem;
+}
+
+
 .app-container{
   min-height: 617px;
 }

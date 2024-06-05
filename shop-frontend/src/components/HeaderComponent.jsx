@@ -15,6 +15,9 @@ const HeaderComponent = () => {
   function handleProductSearch(e){
     e.preventDefault();
     console.log("Search: " + searchString);
+    if(searchString.length < 3){
+      return;
+    }
     let query = searchString;
     setSearchString('');
 

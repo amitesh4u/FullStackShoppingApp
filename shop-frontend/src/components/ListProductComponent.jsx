@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {listProducts} from "../services/ProductService.js";
 import {useNavigate} from "react-router-dom";
 import ProductTable from "./ProductTable.jsx";
+import PageHeaderMessageComponent from "./PageHeaderMessageComponent.jsx";
 
 const ListProductComponent = () => {
   // const DUMMY_DATA = [
@@ -61,9 +62,21 @@ const ListProductComponent = () => {
           });
           setProducts(newProductList)
         })
-        .catch(error => console.log(error))
+        .catch(error => handleError(error))
       },
       [])
+
+  function handleError(error) {
+    console.log(error);
+    let errCode = error.code;
+    let errMessage = "Houston is working on the problem. Please try again later!!";
+    if (errCode === 'ERR_NETWORK') {
+      errMessage = "Connection Error. Please try again later!!"
+    } else if (errCode === 'ERR_BAD_REQUEST') {
+      errMessage = error.response.data.errorMessage;
+    }
+    setPageMessage({message: errMessage, type: "ERROR"})
+  }
 
   const navigator = useNavigate();
 
@@ -71,8 +84,21 @@ const ListProductComponent = () => {
     navigator('/addProduct');
   }
 
+  {/*} Success / Failure/ Warning */}
+  const [pageMessage, setPageMessage] = useState({
+    'message': '',
+    'type': ''
+  });
+
+  const hidePageHeaderMessage = () => setPageMessage({message: '', type: ''})
+
+
   return (
       <div className='container table-responsive'>
+        {pageMessage.message && <PageHeaderMessageComponent
+            message={pageMessage.message}
+            type={pageMessage.type}
+            hidePageHeaderMessage={hidePageHeaderMessage}/>}
         <h1 className="text-center">Products List</h1>
         <div>
           <button className="btn btn-primary" type="button"
@@ -83,6 +109,9 @@ const ListProductComponent = () => {
                       setProducts={setProducts}
                       showDeleteProduct={true}
                       showUpdateProduct={true}
+                      handleError={handleError}
+                      setPageMessage={setPageMessage}
+
         />
 
       </div>

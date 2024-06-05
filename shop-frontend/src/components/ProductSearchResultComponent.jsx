@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {findProducts} from "../services/ProductService.js";
 import {useLocation, useNavigate} from "react-router-dom";
 import ProductTable from "./ProductTable.jsx";
+import PageHeaderMessageComponent from "./PageHeaderMessageComponent.jsx";
 
 const ProductSearchResultComponent = () => {
 
@@ -17,6 +18,9 @@ const ProductSearchResultComponent = () => {
   const [searchString, setSearchString] = useState(query)
 
   function searchProducts() {
+    if(searchString.length < 3){
+      return;
+    }
     console.log("Fetching Products for " + searchString);
     findProducts(searchString)
     .then(response => {
@@ -27,9 +31,34 @@ const ProductSearchResultComponent = () => {
         return {...item, quantity: 0, outOfStock: outOfStock}
       });
       setProducts(newProductList)
+      setPageMessage({
+        message: "Product list has been fetched successfully",
+        type: "SUCCESS"
+      })
     })
-    .catch(error => console.log(error))
+    .catch(error => handleError(error))
   }
+
+  function handleError(error) {
+    console.log(error);
+    let errCode = error.code;
+    let errMessage = "Houston is working on the problem. Please try again later!!";
+    if (errCode === 'ERR_NETWORK') {
+      errMessage = "Connection Error. Please try again later!!"
+    } else if (errCode === 'ERR_BAD_REQUEST') {
+      errMessage = error.response.data.errorMessage;
+    }
+    setPageMessage({message: errMessage, type: "ERROR"})
+  }
+
+  {/*} Success / Failure/ Warning */}
+  const [pageMessage, setPageMessage] = useState({
+    'message': '',
+    'type': ''
+  });
+
+  const hidePageHeaderMessage = () => setPageMessage({message: '', type: ''})
+
 
   useEffect(() => {
         searchProducts();
@@ -49,6 +78,10 @@ const ProductSearchResultComponent = () => {
 
   return (
       <div className='container table-responsive'>
+        {pageMessage.message && <PageHeaderMessageComponent
+            message={pageMessage.message}
+            type={pageMessage.type}
+            hidePageHeaderMessage={hidePageHeaderMessage}/>}
         <h1 className="text-center">Products List</h1>
         <div className="row justify-content-evenly mt-5 mb-lg-5">
                 <span className="col-6">
@@ -75,6 +108,8 @@ const ProductSearchResultComponent = () => {
                       setProducts={setProducts}
                       showDeleteProduct={false}
                       showUpdateProduct={false}
+                      handleError={handleError}
+                      setPageMessage={setPageMessage}
         />
 
       </div>

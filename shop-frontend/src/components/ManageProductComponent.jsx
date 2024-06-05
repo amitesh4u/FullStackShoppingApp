@@ -5,6 +5,7 @@ import {
   updateProduct
 } from "../services/ProductService.js";
 import {useNavigate, useParams} from "react-router-dom";
+import PageHeaderMessageComponent from "./PageHeaderMessageComponent.jsx";
 
 const ManageProductComponent = () => {
   const [name, setName] = useState('')
@@ -12,6 +13,14 @@ const ManageProductComponent = () => {
   const [quantity, setQuantity] = useState('')
   const [price, setPrice] = useState('')
   const [currency, setCurrency] = useState('INR')
+
+  {/*} Success / Failure/ Warning */}
+  const [pageMessage, setPageMessage] = useState({
+    'message': '',
+    'type': ''
+  });
+
+  const hidePageHeaderMessage = () => setPageMessage({message: '', type: ''})
 
   const {productId} = useParams();
   console.log("ProductId: " + productId);
@@ -27,8 +36,12 @@ const ManageProductComponent = () => {
             setQuantity(product.itemsInStock)
             setCurrency(product.price.currency)
             setPrice(product.price.amount)
+            setPageMessage({
+              message: "Product details has been fetched successfully",
+              type: "SUCCESS"
+            })
           })
-          .catch(error => console.log(error))
+          .catch(error => handleError(error))
         }
       },
       []
@@ -59,8 +72,12 @@ const ManageProductComponent = () => {
       setQuantity('');
       setPrice('');
       setCurrency('INR');
+      setPageMessage({
+        message: "Product has been added successfully",
+        type: "SUCCESS"
+      })
     })
-    .catch(error => console.log(error))
+    .catch(error => handleError(error))
   }
 
   function updateNewProduct(e) {
@@ -72,7 +89,19 @@ const ManageProductComponent = () => {
           console.log("Data received " + JSON.stringify(response.data));
           showProductList();
         })
-    .catch(error => console.log(error))
+    .catch(error => handleError(error))
+  }
+
+  function handleError(error) {
+    console.log(error);
+    let errCode = error.code;
+    let errMessage = "Houston is working on the problem. Please try again later!!";
+    if (errCode === 'ERR_NETWORK') {
+      errMessage = "Connection Error. Please try again later!!"
+    } else if (errCode === 'ERR_BAD_REQUEST') {
+      errMessage = error.response.data.errorMessage;
+    }
+    setPageMessage({message: errMessage, type: "ERROR"})
   }
 
   const navigator = useNavigate();
@@ -83,6 +112,10 @@ const ManageProductComponent = () => {
 
   return (
       <div className="container">
+        {pageMessage.message && <PageHeaderMessageComponent
+            message={pageMessage.message}
+            type={pageMessage.type}
+            hidePageHeaderMessage={hidePageHeaderMessage}/>}
         <div className="row">
           <div className="card col-md-6 offset-md-3 offset-md-3">
             <h2 className="text-center"> {productId ? 'Update'
