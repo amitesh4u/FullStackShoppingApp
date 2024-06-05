@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/products")
 @CustomLog
-@ApiResponse(responseCode = "400", description = "Missing or Invalid Details",
+@ApiResponse(responseCode = "400", description = "Missing or Invalid Details or Invalid Argument",
     content = @Content(mediaType = "application/json",
         schema = @Schema(implementation = ClientErrorException.class)))
 @ApiResponse(responseCode = "500", description = "Internal server error. Please Try later", content = @Content)
@@ -62,18 +62,22 @@ public class AddProductsController {
       LOGGER.error("Product details are missing or invalid!!");
       throw clientErrorException(HttpStatus.BAD_REQUEST, "Invalid/Missing details");
     }
+    try {
+      Product product = new Product(new ProductId(generateProductIdUseCase.generateProductId()),
+          name, description,
+          new Price(Currency.getInstance(currency), new BigDecimal(amount)),
+          Integer.parseInt(itemsInStock));
+      LOGGER.debug("Adding product" + product);
+      product = addProductsUseCase.save(product);
 
-    Product product = new Product(new ProductId(generateProductIdUseCase.generateProductId()),
-        name, description,
-        new Price(Currency.getInstance(currency), new BigDecimal(amount)),
-        Integer.parseInt(itemsInStock));
-    LOGGER.debug("Adding product" + product);
-    product = addProductsUseCase.save(product);
+      ProductInListWebModel productsWebModel = ProductInListWebModel.fromDomainModel(product);
+      LOGGER.debug("Returning product {}", productsWebModel);
 
-    ProductInListWebModel productsWebModel = ProductInListWebModel.fromDomainModel(product);
-    LOGGER.debug("Returning product {}", productsWebModel);
-
-    return productsWebModel;
+      return productsWebModel;
+    } catch (IllegalArgumentException e) {
+      LOGGER.error("Invalid arguments", e);
+      throw clientErrorException(HttpStatus.BAD_REQUEST, e.getMessage());
+    }
   }
 
   @PostMapping("/{productId}")
@@ -97,17 +101,21 @@ public class AddProductsController {
       LOGGER.error("Product details are missing or invalid!!");
       throw clientErrorException(HttpStatus.BAD_REQUEST, "Invalid/Missing details");
     }
+    try {
+      Product product = new Product(productId,
+          name, description,
+          new Price(Currency.getInstance(currency), new BigDecimal(amount)),
+          Integer.parseInt(itemsInStock));
+      LOGGER.debug("Updating product" + product);
+      product = addProductsUseCase.save(product);
 
-    Product product = new Product(productId,
-        name, description,
-        new Price(Currency.getInstance(currency), new BigDecimal(amount)),
-        Integer.parseInt(itemsInStock));
-    LOGGER.debug("Updating product" + product);
-    product = addProductsUseCase.save(product);
+      ProductInListWebModel productsWebModel = ProductInListWebModel.fromDomainModel(product);
+      LOGGER.debug("Returning product {}", productsWebModel);
 
-    ProductInListWebModel productsWebModel = ProductInListWebModel.fromDomainModel(product);
-    LOGGER.debug("Returning product {}", productsWebModel);
-
-    return productsWebModel;
+      return productsWebModel;
+    } catch (IllegalArgumentException e) {
+      LOGGER.error("Invalid arguments", e);
+      throw clientErrorException(HttpStatus.BAD_REQUEST, e.getMessage());
+    }
   }
 }

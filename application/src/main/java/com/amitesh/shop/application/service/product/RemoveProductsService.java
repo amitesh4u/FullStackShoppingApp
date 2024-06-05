@@ -34,10 +34,10 @@ public class RemoveProductsService implements RemoveProductsUseCase {
     try {
       carts.forEach(o -> o.lineItems().forEach(i -> {
         if (i.product().id().equals(productId)) {
-          throw new RuntimeException();
+          throw new IllegalArgumentException();
         }
       }));
-    } catch(RuntimeException e){
+    } catch(IllegalArgumentException e){
       throw new ItemInCartException();
     }
     productRepository.delete(product);

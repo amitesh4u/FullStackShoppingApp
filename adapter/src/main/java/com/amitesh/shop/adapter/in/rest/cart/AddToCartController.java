@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/carts")
 @CustomLog
-@ApiResponse(responseCode = "400", description = "The requested product does not exist or stock not available",
+@ApiResponse(responseCode = "400", description = "The requested product does not exist or stock not available or Invalid Argument",
     content = @Content(mediaType = "application/json",
         schema = @Schema(implementation = ClientErrorException.class)))
 /* Defined an empty @Content for Error. Only their descriptions will be displayed. */
@@ -72,13 +72,18 @@ public class AddToCartController {
       throw clientErrorException(
           HttpStatus.BAD_REQUEST, "The requested product does not exist");
     } catch (MaximumItemInCartException e) {
-      LOGGER.error("Only {} items can be added of the product {}", 10, productIdString);
-      throw clientErrorException(
-          HttpStatus.BAD_REQUEST, "The requested product does not exist");
-    } catch (InsufficientStockException e) {
-      String message = "Only %d items in stock".formatted(e.getItemsInStock());
-      LOGGER.error(message + " for product " + productIdString);
+      String message = "Only %d items can be added of the product %s".formatted(10,
+          productIdString);
+      LOGGER.error(message);
       throw clientErrorException(HttpStatus.BAD_REQUEST, message);
+    } catch (InsufficientStockException e) {
+      String message = "Only %d items in-stock for product %s".formatted(e.getItemsInStock(),
+          productIdString);
+      LOGGER.error(message);
+      throw clientErrorException(HttpStatus.BAD_REQUEST, message);
+    } catch(IllegalArgumentException e) {
+      LOGGER.error("Invalid argument for " + productIdString, e);
+      throw clientErrorException(HttpStatus.BAD_REQUEST, e.getMessage());
     }
   }
 }

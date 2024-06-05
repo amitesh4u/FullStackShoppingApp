@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/carts")
 @CustomLog
-@ApiResponse(responseCode = "400", description = "The requested product does not exist",
+@ApiResponse(responseCode = "400", description = "The requested product does not exist or Invalid Argument",
     content = @Content(mediaType = "application/json",
         schema = @Schema(implementation = ClientErrorException.class)))
 /* Defined an empty @Content for Error. Only their descriptions will be displayed. */
@@ -69,6 +69,9 @@ public class RemoveFromCartController {
       LOGGER.error("The requested product does not exist: " + productIdString);
       throw clientErrorException(
           HttpStatus.BAD_REQUEST, "The requested product does not exist");
+    } catch(IllegalArgumentException e) {
+      LOGGER.error("Invalid argument for " + productIdString, e);
+      throw clientErrorException(HttpStatus.BAD_REQUEST, e.getMessage());
     }
   }
 }

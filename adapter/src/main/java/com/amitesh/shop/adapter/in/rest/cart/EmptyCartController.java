@@ -1,15 +1,18 @@
 package com.amitesh.shop.adapter.in.rest.cart;
 
+import static com.amitesh.shop.adapter.in.rest.common.ControllerHelper.clientErrorException;
 import static com.amitesh.shop.adapter.in.rest.common.ControllerHelper.parseCustomerId;
 
+import com.amitesh.shop.adapter.in.rest.common.ClientErrorException;
 import com.amitesh.shop.application.port.in.cart.EmptyCartUseCase;
 import com.amitesh.shop.model.customer.CustomerId;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.CustomLog;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/carts")
 @CustomLog
+@ApiResponse(responseCode = "400", description = "Invalid Argument",
+    content = @Content(mediaType = "application/json",
+        schema = @Schema(implementation = ClientErrorException.class)))
 @ApiResponse(responseCode = "500", description = "Internal server error. Please Try later", content = @Content)
 @Tag(name = "Empty Cart Controller", description = "Endpoint for emptying Cart")
 public class EmptyCartController {
@@ -38,7 +44,12 @@ public class EmptyCartController {
   public void deleteCart(@PathVariable("customerId") String customerIdString) {
     LOGGER.debug("Deleting cart for " + customerIdString);
     CustomerId customerId = parseCustomerId(customerIdString);
-    emptyCartUseCase.emptyCart(customerId);
+    try {
+      emptyCartUseCase.emptyCart(customerId);
+    } catch (IllegalArgumentException e) {
+      LOGGER.error("Invalid argument for " + customerIdString, e);
+      throw clientErrorException(HttpStatus.BAD_REQUEST, e.getMessage());
+    }
   }
 
 }
