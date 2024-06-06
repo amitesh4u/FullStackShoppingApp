@@ -118,7 +118,7 @@
   width: 9rem;
   height: 9rem;
   -webkit-animation: spin 2s linear infinite; /* Safari */
-  animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite alternate;
 }
 
 /* Safari */
@@ -168,6 +168,26 @@
   top: 50%;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
+}
+
+
+/* Add animation to "page content" */
+.app-animate-bottom {
+  position: relative;
+  -webkit-animation-name: animatebottom;
+  -webkit-animation-duration: 3s;
+  animation-name: animatebottom;
+  animation-duration: 3s
+}
+
+@-webkit-keyframes animatebottom {
+  from { bottom:-600px; opacity:0 }
+  to { bottom:0px; opacity:1 }
+}
+
+@keyframes animatebottom {
+  from{ bottom:-600px; opacity:0 }
+  to{ bottom:0; opacity:1 }
 }
 
 
