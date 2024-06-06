@@ -1,24 +1,35 @@
-# Shopping Web Application with Java Spring Boot, Mysql and React using Hexagonal Architecture
+# Full Stack Shopping Web Application with React, Java, Spring Boot and Mysql using Hexagonal Architecture
 
-This project contains a simple React 18 web application with Java 21, Spring Boot 3.2.x and Mysql implemented according to hexagonal architecture.
+This project contains a simple React 18 web application with Java 21, Spring Boot 3.3 and Mysql implemented according to Hexagonal architecture.
 
 ## Technologies used
+### Back-end
 * **JDK 21** - Core language
+* **Spring Boot 3.3** - Java Framework
+* **Maven** - Build tool
 * **Junit5** - Unit Testing
 * **Mockito** - Mocking objects while Unit testing
 * **AssertJ** - Simple assertion style while Unit testing
 * **Lombok** - Auto generates boilerplate code for POJOs
-* **Hibernate** - Persistence Implementation Framework
+* **Hibernate/Spring Data JPA** - Persistence Implementation Framework
 * **MySql** - Database 
 * **TestContainers** - A framework that allows us to launch a MySQL database as a Docker container from tests.
 * **Docker** - To run MySQL and Sonar as containers. Just install Docker Desktop and done
 * **Jacoco** - To analyze code coverage
-* **SonarQube** - To analyze ugs and issues
+* **SonarQube** - To analyze and report bugs and issues
 * **Spotless** - To analyze and format the code
 * **Static Code Analysis** - By SpotBugs, PMD, Google Checkstyle (_If using Sonar then not req as most of the rules are now part of Sonar_)
-* **CustomLog** - Slf4j Logging support using Lombok CustomLog
+* **Slf4j/CustomLog** - Slf4j Logging support using Lombok CustomLog
 * **Swagger** - OpenAPI which is the version 3 implementation for Spring Boot 3.x
 
+### Front-end
+* **React 18** - JSX Framework
+* **React Router** - Navigation
+* **Vite JS** - React development Server
+* **SWC** - Speedy Web Compiler
+* **Bootstrap 5** - CSS 
+* **Axios** - Rest API Calls
+* **FontAwesome** - SVG Icons
 
 ## Important Plugins for Intellij
 * **HTTP Client** - Required to run sample http commands from document/sample-requests.http (Step 1,2)
@@ -27,6 +38,7 @@ This project contains a simple React 18 web application with Java 21, Spring Boo
 * **Spring DATA**
 * **Tomcat**
 * **Jakarta EE** - Application server
+* **Vite**
 
 
 ## What is a Hexagonal Architecture?

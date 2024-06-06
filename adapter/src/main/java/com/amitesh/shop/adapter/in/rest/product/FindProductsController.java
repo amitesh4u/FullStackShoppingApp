@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/products")
 @CustomLog
-@ApiResponse(responseCode = "400", description = "Missing or Invalid Query",
+@ApiResponse(responseCode = "400", description = "Missing or Invalid Query or Product not found",
     content = @Content(mediaType = "application/json",
         schema = @Schema(implementation = ClientErrorException.class)))
 @ApiResponse(responseCode = "500", description = "Internal server error. Please Try later", content = @Content)
@@ -47,7 +47,7 @@ public class FindProductsController {
       @RequestParam(value = "query", required = false) String query) {
     if (query == null) {
       LOGGER.error("Search query is missing!!");
-      throw clientErrorException(HttpStatus.BAD_REQUEST, "Missing 'query'");
+      throw clientErrorException(HttpStatus.BAD_REQUEST, "Missing search query");
     }
 
     List<Product> products;
@@ -56,7 +56,7 @@ public class FindProductsController {
       products = findProductsUseCase.findByNameOrDescription(query);
     } catch (IllegalArgumentException e) {
       LOGGER.error("Invalid query format: " + query);
-      throw clientErrorException(HttpStatus.BAD_REQUEST, "Invalid 'query'");
+      throw clientErrorException(HttpStatus.BAD_REQUEST, "Invalid search query");
     }
 
     List<ProductInListWebModel> productsWebModel = products.stream()

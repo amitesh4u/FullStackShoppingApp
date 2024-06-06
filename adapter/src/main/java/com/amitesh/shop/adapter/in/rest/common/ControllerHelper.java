@@ -31,23 +31,19 @@ public class ControllerHelper {
     return ResponseEntity.status(status.value()).body(errorEntity);
   }
 
-  public static CustomerId parseCustomerId(String string) {
+  public static CustomerId parseCustomerId(String customeridString) {
     try {
-      return new CustomerId(Integer.parseInt(string));
+      return new CustomerId(Integer.parseInt(customeridString));
     } catch (IllegalArgumentException e) {
-      throw clientErrorException(HttpStatus.BAD_REQUEST, "Invalid 'customerId'");
+      throw clientErrorException(HttpStatus.BAD_REQUEST, "Invalid Customer " + customeridString);
     }
   }
 
-  public static ProductId parseProductId(String string) {
-    if (string == null || string.isBlank()) {
-      throw clientErrorException(HttpStatus.BAD_REQUEST, "Missing 'productId'");
-    }
-
+  public static ProductId parseProductId(String productIdString) {
     try {
-      return new ProductId(string);
+      return new ProductId(productIdString);
     } catch (IllegalArgumentException e) {
-      throw clientErrorException(HttpStatus.BAD_REQUEST, "Invalid 'productId'");
+      throw clientErrorException(HttpStatus.BAD_REQUEST, e.getMessage());
     }
   }
 

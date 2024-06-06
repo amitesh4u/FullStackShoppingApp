@@ -43,7 +43,7 @@ class FindProductsServiceTest {
     assertThatThrownBy(
         () -> findProductsService.findByNameOrDescription(query))
         .isExactlyInstanceOf(IllegalArgumentException.class)
-        .hasMessage("'query' must be at least two characters long");
+        .hasMessage("Search Query must be at least three characters long");
 
     verify(productRepository, never()).findByNameOrDescription(any());
   }

@@ -7,7 +7,7 @@ public record Price(Currency currency, BigDecimal amount) {
 
   public Price {
     if(null == currency || null == amount){
-      throw new IllegalArgumentException("'currency' or 'amount' must not be null");
+      throw new IllegalArgumentException("Currency and Amount must not be null");
     }
     if (amount.scale() > currency.getDefaultFractionDigits()) {
       throw new IllegalArgumentException(

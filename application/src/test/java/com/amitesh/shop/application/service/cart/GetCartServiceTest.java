@@ -35,7 +35,7 @@ class GetCartServiceTest {
     assertThatThrownBy(
         () -> getCartService.getCart(null))
         .isExactlyInstanceOf(IllegalArgumentException.class)
-        .hasMessage("'customerId' must not be null");
+        .hasMessage("Invalid Customer. Id must not be null");
 
     verify(cartRepository, never()).findByCustomerId(any());
   }

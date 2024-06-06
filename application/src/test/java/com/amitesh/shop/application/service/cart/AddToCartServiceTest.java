@@ -105,7 +105,7 @@ class AddToCartServiceTest {
     assertThatThrownBy(
         () -> addToCartService.addToCart(TEST_CUSTOMER_ID, TEST_PRODUCT_1.id(), quantity))
         .isExactlyInstanceOf(IllegalArgumentException.class)
-        .hasMessage("'quantity' must be greater than 0");
+        .hasMessage("Quantity must be greater than 0");
 
     verify(productRepository, never()).findById(any());
     verify(cartRepository, never()).findByCustomerId(any());
@@ -117,7 +117,7 @@ class AddToCartServiceTest {
     assertThatThrownBy(
         () -> addToCartService.addToCart(null, TEST_PRODUCT_1.id(), 1))
         .isExactlyInstanceOf(IllegalArgumentException.class)
-        .hasMessage("'customerId' must not be null");
+        .hasMessage("Invalid Customer. Id must not be null");
 
     verify(productRepository, never()).findById(any());
     verify(cartRepository, never()).findByCustomerId(any());
@@ -129,7 +129,7 @@ class AddToCartServiceTest {
     assertThatThrownBy(
         () -> addToCartService.addToCart(TEST_CUSTOMER_ID, null, 1))
         .isExactlyInstanceOf(IllegalArgumentException.class)
-        .hasMessage("'productId' must not be null");
+        .hasMessage("Invalid Product. Id must not be null");
 
     verify(productRepository, never()).findById(any());
     verify(cartRepository, never()).findByCustomerId(any());

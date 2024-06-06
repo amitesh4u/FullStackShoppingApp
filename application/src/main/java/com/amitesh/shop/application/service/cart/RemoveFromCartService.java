@@ -28,13 +28,13 @@ public class RemoveFromCartService implements RemoveFromCartUseCase {
       throws ProductNotFoundException {
 
     if (null == customerId) {
-      throw new IllegalArgumentException("'customerId' must not be null");
+      throw new IllegalArgumentException("'Invalid Customer. Id must not be null");
     }
     if (null == productId) {
-      throw new IllegalArgumentException("'productId' must not be null");
+      throw new IllegalArgumentException("Product Id must not be null");
     }
     if (quantity < 1) {
-      throw new IllegalArgumentException("'quantity' must be greater than 0");
+      throw new IllegalArgumentException("Quantity must be greater than 0");
     }
 
     Product product = productRepository.findById(productId)

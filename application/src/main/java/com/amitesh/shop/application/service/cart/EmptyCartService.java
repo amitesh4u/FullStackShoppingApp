@@ -18,7 +18,7 @@ public class EmptyCartService implements EmptyCartUseCase {
   @Override
   public void emptyCart(CustomerId customerId) {
     if (null == customerId) {
-      throw new IllegalArgumentException("'customerId' must not be null");
+      throw new IllegalArgumentException("Invalid Customer. Id must not be null");
     }
     Cart cart =
         cartRepository

@@ -27,7 +27,7 @@ class PriceTest {
   void testConstructor_amountIsNull_throwException() {
     assertThatThrownBy(() -> new Price(EUR, null))
         .isExactlyInstanceOf(IllegalArgumentException.class)
-        .hasMessage("'currency' or 'amount' must not be null");
+        .hasMessage("Currency and Amount must not be null");
   }
 
   @DisplayName("Throw error if amount is null")
@@ -35,7 +35,7 @@ class PriceTest {
   void testConstructor_currencyIsNull_throwException() {
     assertThatThrownBy(() -> new Price(null, BigDecimal.ONE))
         .isExactlyInstanceOf(IllegalArgumentException.class)
-        .hasMessage("'currency' or 'amount' must not be null");
+        .hasMessage("Currency and Amount must not be null");
   }
 
   @DisplayName("Throw error if scale doesn't match with currency default scale")

@@ -25,7 +25,7 @@ class ProductIdTest {
   void testConstructor_idIsNullOrEmpty_throwException(String id){
     assertThatThrownBy(() -> new ProductId(id))
         .isExactlyInstanceOf(IllegalArgumentException.class)
-        .hasMessage("'id' must not be null or empty");
+        .hasMessage("Invalid Product. Id must not be null or empty");
   }
 
   @DisplayName("Return ProductId for valid Id")

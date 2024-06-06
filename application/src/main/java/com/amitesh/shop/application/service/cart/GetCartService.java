@@ -18,7 +18,7 @@ public class GetCartService implements GetCartUseCase {
   @Override
   public Cart getCart(CustomerId customerId) {
     if (null == customerId) {
-      throw new IllegalArgumentException("'customerId' must not be null");
+      throw new IllegalArgumentException("Invalid Customer. Id must not be null");
     }
     return cartRepository
         .findByCustomerId(customerId)

@@ -16,7 +16,7 @@ class CustomerIdTest {
   void testConstructor_idIsNotPositive_throwException(int id) {
     assertThatThrownBy(() -> new CustomerId(id))
         .isExactlyInstanceOf(IllegalArgumentException.class)
-        .hasMessage("'id' must be a positive integer");
+        .hasMessage("Invalid Customer. Id must be a positive integer");
   }
 
   @DisplayName("Return CustomerId for valid Id")
