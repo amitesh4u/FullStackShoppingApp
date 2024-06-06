@@ -6,6 +6,11 @@
   text-align: left;
 }
 
+.app-container{
+  min-height: 617px;
+  background-color: rgba(237, 239, 245, 0.77) !important;
+}
+
 .app-nav-link {
   color: rgb(255,255,255) !important;
   border-radius: 5px;
@@ -92,10 +97,6 @@
   font-size: 1.5rem;
 }
 
-
-.app-container{
-  min-height: 617px;
-}
 
 .logo {
   height: 6em;

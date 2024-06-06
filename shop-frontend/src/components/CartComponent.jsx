@@ -205,8 +205,8 @@ const CartComponent = () => {
             hidePageHeaderMessage={hidePageHeaderMessage}/>}
 
         {emptyCart ?
-            <p className="d-flex justify-content-center mt-lg-5">
-              <button className="btn btn-primary"
+            <p className="d-flex justify-content-center">
+              <button className="btn btn-primary  mt-lg-5"
                       style={{minWidth: '140px'}}
                       onClick={showProductList}>
                 Show Products
@@ -221,7 +221,7 @@ const CartComponent = () => {
                   Cart
                 </button>
               </div>
-              <table className="table table-striped table-bordered">
+              <table className="table table-striped">
                 <thead>
                 <tr>
                   <th>Product Id</th>
@@ -229,9 +229,10 @@ const CartComponent = () => {
                   <th>Price</th>
                   <th>Quantity</th>
                   <th>Sub Total</th>
+                  <th></th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody className="table-group-divider">
                 {
                   // Need to verify if obj is null or not before calling map
                   // else throws TypeError: Cannot read properties of undefined (reading 'map')
@@ -241,25 +242,20 @@ const CartComponent = () => {
                         <td>{item.productName}</td>
                         <td>{item.price.currency} {item.price.amount}</td>
                         <td>
-                          <div style={{
-                            width: '150px',
-                            margin: '0px auto'
-                          }}>
-                            <div className="input-group">
-                        <span className="input-group-btn">
-                            <i className="fa-solid fa-minus app-decr-icon"
-                               data-product-id={item.productId}
-                               data-index={index}
-                               onClick={handleDecrementItem}/>
-                        </span>
-                              <p className="px-3 py-1">{item.quantity}</p>
-                              <span className="input-group-btn">
+                          <div className="input-group">
+                            <span className="input-group-btn">
+                                <i className="fa-solid fa-minus app-decr-icon"
+                                   data-product-id={item.productId}
+                                   data-index={index}
+                                   onClick={handleDecrementItem}/>
+                            </span>
+                            <p className="px-3 py-1">{item.quantity}</p>
+                            <span className="input-group-btn">
                             <i className="fa-solid fa-plus app-incr-icon"
                                data-product-id={item.productId}
                                data-index={index}
                                onClick={handleIncrementItem}/>
-                        </span>
-                            </div>
+                            </span>
                           </div>
                         </td>
                         <td>{item.price.currency} {(item.quantity
@@ -296,7 +292,7 @@ const CartComponent = () => {
         <ConfirmationModalComponent show={cartRemovalModalShow}
                                     handleClose={handleCartRemovalModalClose}
                                     title={'Cart removal confirmation!'}
-                                    body={'Do you really want to remove all Items from Cart?'}
+                                    body={'Do you really want to remove all the items from Cart?'}
                                     handleConfirmation={handleDeleteCart}/>
       </div>
 

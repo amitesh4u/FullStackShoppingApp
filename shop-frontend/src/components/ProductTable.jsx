@@ -111,7 +111,7 @@ const ProductTable = props => {
   return (
       <div>
         <div>
-          <table className="table table-striped table-bordered">
+          <table className="table table-striped">
             <thead>
             <tr>
               <th>Id</th>
@@ -119,9 +119,13 @@ const ProductTable = props => {
               <th>Description</th>
               <th>Price</th>
               <th>Items in Stock</th>
+              <th>Quantity</th>
+              <th></th>
+              {props.showUpdateProduct && <th></th>}
+              {props.showDeleteProduct && <th></th>}
             </tr>
             </thead>
-            <tbody>
+            <tbody className="table-group-divider">
             {
               props.productList.map((product) =>
                   <tr key={product.id}>

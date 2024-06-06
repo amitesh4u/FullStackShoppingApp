@@ -30,7 +30,7 @@ const HeaderComponent = () => {
         <nav className="navbar navbar-expand-lg bg-primary"
              data-bs-theme="dark">
           <div className="container-fluid">
-            <a className="navbar-brand" href="/">Shopping Application</a>
+            <span className="navbar-brand">Shopping Application&emsp;|</span>
             <button className="navbar-toggler collapsed" type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#navbarColor02"

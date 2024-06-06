@@ -2,9 +2,9 @@ import React from 'react'
 
 const About = () => {
   return (
-      <div className="container">
-        <h1 className=" text-center">About</h1>
-        <div className="card col-md-8 offset-md-3">
+      <div className="card col-md-8 offset-md-2">
+        <p className="bg-white text-center fs-1">About</p>
+        <div className="">
           <p className="mb-3">
             <h5>This a Full Stack Shopping application created as per Hexagonal
               Architecture
@@ -12,12 +12,12 @@ const About = () => {
           </p>
           <ul className="fs-5">
             <li>React 18+</li>
-            <li>JDK21</li>
+            <li>Jdk 21</li>
             <li>Spring Boot 3.3+ and</li>
             <li>Mysql</li>
           </ul>
 
-          <h5>Other technologies used are as follows</h5>
+          <h5>Other technologies used are as follows:</h5>
           <ul className="fs-6">
             <li><b>Maven</b> - Build tool</li>
             <li><b>Junit5</b> - Unit Testing</li>
@@ -33,6 +33,7 @@ const About = () => {
             <li><b>Docker</b> - To run MySQL and Sonar as containers. Just install
               Docker Desktop and done
             </li>
+            <li><b>Tomcat</b> - Application Server</li>
             <li><b>Jacoco</b> - To analyze code coverage</li>
             <li><b>SonarQube</b> - To analyze and report bugs and issues</li>
             <li><b>Spotless</b> - To analyze and format the code</li>
