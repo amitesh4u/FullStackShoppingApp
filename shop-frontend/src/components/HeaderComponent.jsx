@@ -1,5 +1,7 @@
 import React, {useState} from 'react'
 import {useNavigate} from "react-router-dom";
+import logo from '../assets/logo1.png'
+import appName from '../assets/cliqueshop-name-1.png'
 
 const HeaderComponent = () => {
 
@@ -30,7 +32,10 @@ const HeaderComponent = () => {
         <nav className="navbar navbar-expand-lg bg-primary"
              data-bs-theme="dark">
           <div className="container-fluid">
-            <span className="navbar-brand">Shopping Application&emsp;|</span>
+            <span className="navbar-brand">
+              <img src={logo} alt="CliqueShop" style={{width:'60px', backgroundColor:'white', borderRadius:'10px', padding:'0px', marginRight:'5px'}}></img>
+              <img src={appName} alt="CliqueShop"  style={{width:'180px', borderRadius:'10px', padding:'0px', marginRight:'5px'}}></img>|
+            </span>
             <button className="navbar-toggler collapsed" type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#navbarColor02"
@@ -54,9 +59,9 @@ const HeaderComponent = () => {
                   <a className="nav-link app-nav-link" href="/about">About</a>
                 </li>
               </ul>
-              <form className="d-flex col-5 me-lg-5" role="search">
+              <form className="d-flex col-4 me-lg-5" role="search">
                 <input className="form-control me-2" type="search"
-                       placeholder="Search Products (min 3 characters)"
+                       placeholder="Search Products (min 3 chars)"
                        value={searchString}
                        required
                        onChange={e => setSearchString(e.target.value)}
