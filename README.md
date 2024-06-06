@@ -1,6 +1,11 @@
-# Full Stack Shopping Web Application with React, Java, Spring Boot and Mysql using Hexagonal Architecture
+# CliqueShop 
 
-This project contains a simple React 18 web application with Java 21, Spring Boot 3.3 and Mysql implemented according to Hexagonal architecture.
+### Full Stack Shopping Web Application with React 18 web application with Java 21, Spring Boot 3.3 and Mysql implemented according to Hexagonal architecture.
+
+<br/>
+<img src="documents/CliqueShop.png" alt="CliqueShop application page snapshot" width="700px"/>
+
+
 
 ## Technologies used
 ### Back-end
@@ -51,15 +56,18 @@ Alistair Cockburn introduced the hexagonal software architecture as follows
 # Application overview
 The application mimics a simplified online store with following functionalities:
 
+* Add, Remove and Edit Products
 * Product search
 * Adding a product to the shopping cart
 * Retrieving the shopping cart with the products, their respective quantity, and the total price
+* Incrementing, Decrementing or removing an Item from Cart
 * Emptying the shopping cart
 
 ### Note:
 * The amount of a product added to the cart must be at least one.
-* After adding a product, the total quantity of this product in the cart must not exceed the amount of the product available in the warehouse.
-* After emptying the Cart there should be no products available in the Cart
+* After adding a product, the total quantity of this product in the cart must not exceed the amount of the product available in the warehouse or 10 which ever is smaller.
+* After emptying the Cart there should be no products available in the Cart.
+* We can not remove a Product if it is present in any Cart.
 
 # Architecture Overview
 The source code has four modules:
@@ -70,9 +78,9 @@ The source code has four modules:
 
 The following diagram shows the final hexagonal architecture of the application along with the source code modules.
 
-<img src="documents/hexagonal-architecture-modules-uml.png" alt="Hexagonal Architecture Modules UML diagram" width="600"/>
+<img src="documents/hexagonal-architecture-modules-uml.png" alt="Hexagonal Architecture Modules UML diagram" width="600px"/>
 <br>
-<img src="documents/hexagonal-architecture-modules.png" alt="Hexagonal Architecture Modules" width="600"/>
+<img src="documents/hexagonal-architecture-modules.png" alt="Hexagonal Architecture Modules" width="600px"/>
 
 Hexagonal Architecture modules (www.happycoders.eu)
 
@@ -95,6 +103,8 @@ lombok.log.custom.declaration = org.slf4j.Logger org.slf4j.LoggerFactory.getLogg
 ```
 
 ## How to run
+### BackEnd server
+* Build and run the **Bootstrap.war** in Tomcat
 * **Spring Boot Profile** - Use the Spring boot profile **_mysql_** while running the app. Default is **_inmemory_**
 ```
 -Dspring.profiles.active=mysql
@@ -107,6 +117,12 @@ docker run --name hexagon-mysql -d -p3306:3306 -e MYSQL_DATABASE=shop -e MYSQL_R
 ```
 * You can invoke HTTP commands from '**documents/sample-requests.http**' directly from Intellij
 
+### Front-end server
+* Go to shop-frontend folder and run node server
+``` 
+cd shop-frontend
+npm run dev
+```
 ## Code analysis
 * **Spotless** - run **_mvn spotless:apply_** to auto reformat the code if there is any issue during build
 * **Static code analysis** - For Static code analysis with Spotbugs, PMD and Google Check style run
