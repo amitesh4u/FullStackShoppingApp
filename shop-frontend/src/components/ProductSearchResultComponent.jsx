@@ -4,6 +4,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import ProductTable from "./ProductTable.jsx";
 import PageHeaderMessageComponent from "./PageHeaderMessageComponent.jsx";
 import {handleRestApiError} from "./RestCallErrorHandler.jsx";
+import LoaderComponent from "./LoaderComponent.jsx";
 
 const ProductSearchResultComponent = () => {
 
@@ -30,6 +31,9 @@ const ProductSearchResultComponent = () => {
 
   //const {query} = useParams();
 
+  /* Loader */
+  const [showLoader, setShowLoader] = useState(false)
+
   /* Data with state */
   const [productList, setProducts] = useState([])
   const [searchString, setSearchString] = useState(query)
@@ -45,6 +49,9 @@ const ProductSearchResultComponent = () => {
       return;
     }
     console.log("Fetching Products for " + searchString);
+
+    setShowLoader(true);
+
     findProducts(searchString)
     .then(response => {
       console.log("Data received " + JSON.stringify(response.data));
@@ -60,6 +67,8 @@ const ProductSearchResultComponent = () => {
       })
     })
     .catch(error => handleError(error))
+
+    setShowLoader(false);
   }
 
   function handleProductSearch(e) {
@@ -75,11 +84,13 @@ const ProductSearchResultComponent = () => {
 
   return (
       <div className='container table-responsive'>
+        {showLoader && <LoaderComponent show={{showLoader}}/>}
+
         {pageMessage.message && <PageHeaderMessageComponent
             message={pageMessage.message}
             type={pageMessage.type}
             hidePageHeaderMessage={hidePageHeaderMessage}/>}
-        <h1 className="text-center">Products List</h1>
+        <h1 className="text-center mt-3">Products List</h1>
         <div className="row justify-content-evenly mt-5 mb-lg-5">
                 <span className="col-6">
          <button className="btn btn-primary" type="button"
@@ -107,6 +118,7 @@ const ProductSearchResultComponent = () => {
                       showUpdateProduct={false}
                       handleError={handleError}
                       setPageMessage={setPageMessage}
+                      setShowLoader={setShowLoader}
         />
 
       </div>

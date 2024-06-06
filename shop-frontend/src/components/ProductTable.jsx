@@ -31,6 +31,8 @@ const ProductTable = props => {
       return;
     }
 
+    props.setShowLoader(true)
+
     addItemToCart(customerId, productId, productQuantity)
     .then(response => {
       console.log("Data received " + JSON.stringify(response.data));
@@ -47,6 +49,9 @@ const ProductTable = props => {
       })
     })
     .catch(error => props.handleError(error))
+
+    props.setShowLoader(false)
+
   }
 
   function handleDecrementItem(e) {
@@ -96,6 +101,8 @@ const ProductTable = props => {
     console.log("Removing Product:" + productIdTBD)
     handleClose()
 
+    props.setShowLoader(true)
+
     removeProduct(productIdTBD).then(response => {
       console.log("Data received " + JSON.stringify(response.data));
       props.setProducts(props.productList.filter(a =>
@@ -106,105 +113,106 @@ const ProductTable = props => {
       })
     })
     .catch(error => props.handleError(error))
+
+    //props.setShowLoader(false)
+
   }
 
   return (
       <div>
-        <div>
-          <table className="table table-striped">
-            <thead>
-            <tr>
-              <th>Id</th>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Price</th>
-              <th>Items in Stock</th>
-              <th>Quantity</th>
-              <th></th>
-              {props.showUpdateProduct && <th></th>}
-              {props.showDeleteProduct && <th></th>}
-            </tr>
-            </thead>
-            <tbody className="table-group-divider">
-            {
-              props.productList.map((product) =>
-                  <tr key={product.id}>
-                    <td>{product.id}</td>
-                    <td>{product.name}</td>
-                    <td>{product.description}</td>
-                    <td>{product.price.currency} {product.price.amount}</td>
-                    <td>{product.itemsInStock}</td>
-                    <td>
-                      {product.outOfStock ?
-                          <div className="text-danger">Out Of
-                            Stock</div>
-                          :
-                          <div style={{
-                            width: '110px',
-                            margin: '0px auto'
-                          }}>
-                            <div className="input-group">
+        <table className="table table-striped">
+          <thead>
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Items in Stock</th>
+            <th>Quantity</th>
+            <th></th>
+            {props.showUpdateProduct && <th></th>}
+            {props.showDeleteProduct && <th></th>}
+          </tr>
+          </thead>
+          <tbody className="table-group-divider">
+          {
+            props.productList.map((product) =>
+                <tr key={product.id}>
+                  <td>{product.id}</td>
+                  <td>{product.name}</td>
+                  <td>{product.description}</td>
+                  <td>{product.price.currency} {product.price.amount}</td>
+                  <td>{product.itemsInStock}</td>
+                  <td>
+                    {product.outOfStock ?
+                        <div className="text-danger">Out Of
+                          Stock</div>
+                        :
+                        <div style={{
+                          width: '110px',
+                          margin: '0px auto'
+                        }}>
+                          <div className="input-group">
                             <span className="input-group-btn">
                                 <i className="fa-solid fa-minus app-decr-icon"
                                    data-product-id={product.id}
                                    onClick={handleDecrementItem}/>
                             </span>
-                              <p className="px-3 py-1">{product.quantity}</p>
-                              {/*<input type="text" id="quantity" name="quantity"*/}
-                              {/*       className="form-control input-number text-center"*/}
-                              {/*       value={product.quantity}*/}
-                              {/*       min="1" max="10" size="1"/>*/}
-                              <span className="input-group-btn">
+                            <p className="px-3 py-1">{product.quantity}</p>
+                            {/*<input type="text" id="quantity" name="quantity"*/}
+                            {/*       className="form-control input-number text-center"*/}
+                            {/*       value={product.quantity}*/}
+                            {/*       min="1" max="10" size="1"/>*/}
+                            <span className="input-group-btn">
                                 <i className="fa-solid fa-plus app-incr-icon"
                                    data-product-id={product.id}
                                    onClick={handleIncrementItem}/>
                             </span>
-                            </div>
                           </div>
-                      }
-                    </td>
-                    <td>
-                      <button className="btn btn-sm btn-primary"
-                              style={{minWidth: '110px'}}
-                              type="AddToCart"
-                              data-product-id={product.id}
-                              data-product-quantity={product.quantity}
-                              onClick={handleAddToCart}
-                              disabled={product.outOfStock}
-                      >
-                        Add To Cart
-                      </button>
-                    </td>
-                    {props.showUpdateProduct &&
-                        <td>
+                        </div>
+                    }
+                  </td>
+                  <td>
+                    <button className="btn btn-sm btn-primary"
+                            style={{minWidth: '110px'}}
+                            type="AddToCart"
+                            data-product-id={product.id}
+                            data-product-quantity={product.quantity}
+                            onClick={handleAddToCart}
+                            disabled={product.outOfStock}
+                    >
+                      Add To Cart
+                    </button>
+                  </td>
+                  {props.showUpdateProduct &&
+                      <td>
                     <span title="Update Product">
                       <i className="fa-solid fa-pen-to-square app-edit-icon"
                          data-product-id={product.id}
                          onClick={handleUpdateProduct}
                       ></i>
                     </span>
-                        </td>
-                    }
-                    {props.showDeleteProduct &&
-                        <td>
+                      </td>
+                  }
+                  {props.showDeleteProduct &&
+                      <td>
                     <span title="Remove Product">
                       <i className="fa-solid fa-trash-can app-trash-icon"
                          data-product-id={product.id}
                          onClick={handleConfirmationModalShow}
                       ></i>
                     </span>
-                        </td>
-                    }
-                  </tr>
-              )
-            }
-            </tbody>
-          </table>
-          <ConfirmationModalComponent show={show} handleClose={handleClose}
-                                      title={'Product removal confirmation!'}
-                                      body={'Do you really want to remove this Product?'}
-                                      handleConfirmation={handleDeleteProduct}/>
-        </div>
+                      </td>
+                  }
+                </tr>
+            )
+          }
+          </tbody>
+        </table>
+        <ConfirmationModalComponent show={show} handleClose={handleClose}
+                                    title={'Product removal confirmation!'}
+                                    body={'Do you really want to remove this Product?'}
+                                    handleConfirmation={handleDeleteProduct}/>
       </div>
   )
 }

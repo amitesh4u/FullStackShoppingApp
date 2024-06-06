@@ -7,6 +7,7 @@ import {
 import {useNavigate, useParams} from "react-router-dom";
 import PageHeaderMessageComponent from "./PageHeaderMessageComponent.jsx";
 import {handleRestApiError} from "./RestCallErrorHandler.jsx";
+import LoaderComponent from "./LoaderComponent.jsx";
 
 const ManageProductComponent = () => {
 
@@ -24,6 +25,9 @@ const ManageProductComponent = () => {
   function showProductList() {
     navigator('/product');
   }
+
+  /* Loader */
+  const [showLoader, setShowLoader] = useState(false)
 
   /* Fetch data as shared during navigation from previous page */
   const {productId} = useParams();
@@ -77,6 +81,9 @@ const ManageProductComponent = () => {
     e.preventDefault();
     console.log(
         name + "|" + desc + "|" + quantity + "|" + currency + "|" + price);
+
+    setShowLoader(true);
+
     addProduct(name, desc, quantity, currency, price).then(response => {
       console.log("Data received " + JSON.stringify(response.data));
       setName('');
@@ -90,18 +97,25 @@ const ManageProductComponent = () => {
       })
     })
     .catch(error => handleError(error))
+
+    setShowLoader(false);
   }
 
   function updateNewProduct(e) {
     e.preventDefault();
     console.log(productId + "|" +
         name + "|" + desc + "|" + quantity + "|" + currency + "|" + price);
+
+    setShowLoader(true);
+
     updateProduct(productId, name, desc, quantity, currency, price).then(
         response => {
           console.log("Data received " + JSON.stringify(response.data));
           showProductList();
         })
     .catch(error => handleError(error))
+
+    setShowLoader(false);
   }
 
   /* Common Error handler */
@@ -112,13 +126,15 @@ const ManageProductComponent = () => {
 
   return (
       <div className="container">
+        {showLoader && <LoaderComponent show={{showLoader}}/>}
+
         {pageMessage.message && <PageHeaderMessageComponent
             message={pageMessage.message}
             type={pageMessage.type}
             hidePageHeaderMessage={hidePageHeaderMessage}/>}
         <div className="row">
           <div className="card col-md-6 offset-md-3">
-            <h2 className="text-center"> {productId ? 'Update'
+            <h2 className="text-center mt-0"> {productId ? 'Update'
                 : 'Add'} Product</h2>
             <div className="card-body">
               <form onSubmit={productId ? updateNewProduct : addNewProduct}
@@ -169,7 +185,7 @@ const ManageProductComponent = () => {
                 <div className="row justify-content-evenly">
                   <span className="col-4">
                     <button className="btn btn-primary"
-                            style={{minWidth: '120px'}}
+                            style={{minWidth: '140px'}}
                             type="submit">
                     {productId ? 'Update' : 'Add'} Product
                     </button>

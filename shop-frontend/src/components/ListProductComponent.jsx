@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 import ProductTable from "./ProductTable.jsx";
 import PageHeaderMessageComponent from "./PageHeaderMessageComponent.jsx";
 import {handleRestApiError} from "./RestCallErrorHandler.jsx";
+import LoaderComponent from "./LoaderComponent.jsx";
 
 const ListProductComponent = () => {
 
@@ -22,6 +23,9 @@ const ListProductComponent = () => {
     navigator('/addProduct');
   }
 
+  /* Loader */
+  const [showLoader, setShowLoader] = useState(false)
+
   /* Data with state */
   const [productList, setProducts] = useState([])
 
@@ -37,6 +41,10 @@ const ListProductComponent = () => {
             return {...item, quantity: 0, outOfStock: outOfStock}
           });
           setProducts(newProductList)
+          setPageMessage({
+            message: "Product list has been fetched successfully",
+            type: "SUCCESS"
+          })
         })
         .catch(error => handleError(error))
       },
@@ -54,7 +62,8 @@ const ListProductComponent = () => {
           type={pageMessage.type}
           hidePageHeaderMessage={hidePageHeaderMessage}/>}
         <div className='container table-responsive'>
-          <h1 className="text-center">Products List</h1>
+          {showLoader && <LoaderComponent show={{showLoader}}/>}
+          <h1 className="text-center mt-3">Products List</h1>
           <div className="float-end mb-3">
             <button className="btn btn-primary" type="button"
                     onClick={addNewProduct}>Add Product
@@ -66,6 +75,7 @@ const ListProductComponent = () => {
                         showUpdateProduct={true}
                         handleError={handleError}
                         setPageMessage={setPageMessage}
+                        setShowLoader={setShowLoader}
 
           />
 

@@ -9,6 +9,7 @@ import ConfirmationModalComponent from "./ConfirmationModalComponent.jsx";
 import PageHeaderMessageComponent from "./PageHeaderMessageComponent.jsx";
 import {useNavigate} from "react-router-dom";
 import {handleRestApiError} from "./RestCallErrorHandler.jsx";
+import LoaderComponent from "./LoaderComponent.jsx";
 
 const CartComponent = () => {
 
@@ -25,6 +26,9 @@ const CartComponent = () => {
   function showProductList() {
     navigator('/product');
   }
+
+  /* Loader */
+  const [showLoader, setShowLoader] = useState(false)
 
   /* Data with state */
   const [customerId, setCustomerId] = useState('61157')
@@ -76,6 +80,7 @@ const CartComponent = () => {
     // //console.log(JSON.stringify(item));
     // item.quantity++;
     // // console.log(JSON.stringify(item));
+    setShowLoader(true);
 
     addItemToCart(61157, datatset.productId, 1)
     .then(response => {
@@ -86,6 +91,8 @@ const CartComponent = () => {
         type: "SUCCESS"
       })
     }).catch(error => handleError(error))
+
+    setShowLoader(false);
 
     // // const newItemList = cartItemList.lineItems?.map(item => {
     // //   if (item.productId === datatset.productId) {
@@ -127,6 +134,8 @@ const CartComponent = () => {
     item.quantity--;
     // console.log(JSON.stringify(item));
 
+    setShowLoader(true);
+
     removeItemFromCart(61157, datatset.productId, 1)
     .then(response => {
       console.log("Data received " + JSON.stringify(response.data));
@@ -136,6 +145,8 @@ const CartComponent = () => {
         type: "SUCCESS"
       })
     }).catch(error => handleError(error))
+
+    setShowLoader(false);
   }
 
   /* Handle Product/Cart deletion with Confirmation modal */
@@ -161,6 +172,9 @@ const CartComponent = () => {
   const handleDeleteItem = () => {
     handleProductRemovalModalClose();
     console.log(productIdTBD + '|' + quantityTBD)
+
+    setShowLoader(true);
+
     removeItemFromCart(61157, productIdTBD, quantityTBD)
     .then(response => {
           console.log("Data received " + JSON.stringify(response.data));
@@ -180,11 +194,17 @@ const CartComponent = () => {
           }
         }
     ).catch(error => handleError(error))
+
+    setShowLoader(false);
+
   }
 
   const handleDeleteCart = () => {
     handleCartRemovalModalClose();
     console.log("deleting cart: " + customerId)
+
+    setShowLoader(true);
+
     deleteCart(customerId).then(response => {
           console.log("Data received " + JSON.stringify(response.data));
           setCartItems([])
@@ -195,10 +215,15 @@ const CartComponent = () => {
           setEmptyCart(true)
         }
     ).catch(error => handleError(error));
+
+    setShowLoader(false);
+
   }
 
   return (
       <div>
+        {showLoader && <LoaderComponent show={{showLoader}}/>}
+
         {pageMessage.message && <PageHeaderMessageComponent
             message={pageMessage.message}
             type={pageMessage.type}
@@ -206,7 +231,7 @@ const CartComponent = () => {
 
         {emptyCart ?
             <p className="d-flex justify-content-center">
-              <button className="btn btn-primary  mt-lg-5"
+              <button className="btn btn-primary mt-lg-5"
                       style={{minWidth: '140px'}}
                       onClick={showProductList}>
                 Show Products
@@ -214,7 +239,7 @@ const CartComponent = () => {
             </p>
             :
             <div className='container table-responsive'>
-              <h1 className="text-center">Cart Item List</h1>
+              <h1 className="text-center mt-3">Cart Item List</h1>
               <div className="float-end mb-4">
                 <button className="btn btn-primary" type="button"
                         onClick={handleRemoveCartConfirmationModalShow}>Clear
@@ -294,6 +319,7 @@ const CartComponent = () => {
                                     title={'Cart removal confirmation!'}
                                     body={'Do you really want to remove all the items from Cart?'}
                                     handleConfirmation={handleDeleteCart}/>
+
       </div>
 
   )
