@@ -105,16 +105,28 @@ const ProductTable = props => {
 
     removeProduct(productIdTBD).then(response => {
       console.log("Data received " + JSON.stringify(response.data));
-      props.setProducts(props.productList.filter(a =>
-          a.id !== productIdTBD))
-      props.setPageMessage({
-        message: "Product has been removed successfully",
-        type: "SUCCESS"
-      })
+      let newProductList = props.productList.filter(a =>
+          a.id !== productIdTBD);
+      props.setProducts(newProductList)
+
+      console.log("ProductList " + JSON.stringify(newProductList))
+      if(newProductList.length === 0){
+        props.setNoProducts(true)
+        props.setPageMessage({
+          message: "No Available Products.",
+          type: "WARNING"
+        })
+      }else{
+        props.setNoProducts(false)
+        props.setPageMessage({
+          message: "Product has been removed successfully",
+          type: "SUCCESS"
+        })
+      }
     })
     .catch(error => props.handleError(error))
 
-    //props.setShowLoader(false)
+    props.setShowLoader(false)
 
   }
 

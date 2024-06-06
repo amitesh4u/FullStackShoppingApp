@@ -145,7 +145,8 @@ const ManageProductComponent = () => {
                          placeholder="Enter Product Name"
                          name="name" value={name}
                          className="form-control"
-                         onChange={handleProductName}/>
+                         onChange={handleProductName}
+                         autoFocus/>
                 </div>
                 <div className="form-group mb-2">
                   <label className="form-label"> Product Description:</label>
