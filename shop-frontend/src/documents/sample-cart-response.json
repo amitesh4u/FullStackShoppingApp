@@ -1,0 +1,36 @@
+{
+   "lineItems": [
+     {
+       "productId": "TTKQ8NJZ",
+       "productName": "Plastic Sheeting",
+       "price": {
+         "currency": "EUR",
+         "amount": 42.99
+       },
+       "quantity": 20
+     },
+     {
+       "productId": "K3SR7PBX",
+       "productName": "27-Inch Curved Computer Monitor",
+       "price": {
+         "currency": "EUR",
+         "amount": 159.99
+       },
+       "quantity": 2
+     },
+     {
+       "productId": "Q3W43CNC",
+       "productName": "Dual Monitor Desk Mount",
+       "price": {
+         "currency": "EUR",
+         "amount": 119.90
+       },
+       "quantity": 1
+     }
+   ],
+   "numberOfItems": 23,
+   "subTotal": {
+     "currency": "EUR",
+     "amount": 1299.68
+   }
+ }

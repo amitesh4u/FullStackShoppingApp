@@ -1,64 +1,40 @@
 import React, {useEffect, useState} from 'react'
 import {
   addItemToCart,
+  deleteCart,
   getCart,
   removeItemFromCart
 } from "../services/CartService.js";
 import ConfirmationModalComponent from "./ConfirmationModalComponent.jsx";
 import PageHeaderMessageComponent from "./PageHeaderMessageComponent.jsx";
 import {useNavigate} from "react-router-dom";
+import {handleRestApiError} from "./RestCallErrorHandler.jsx";
 
 const CartComponent = () => {
 
-  // const DUMMY_CART = {
-  //   "lineItems": [
-  //     {
-  //       "productId": "TTKQ8NJZ",
-  //       "productName": "Plastic Sheeting",
-  //       "price": {
-  //         "currency": "EUR",
-  //         "amount": 42.99
-  //       },
-  //       "quantity": 20
-  //     },
-  //     {
-  //       "productId": "K3SR7PBX",
-  //       "productName": "27-Inch Curved Computer Monitor",
-  //       "price": {
-  //         "currency": "EUR",
-  //         "amount": 159.99
-  //       },
-  //       "quantity": 2
-  //     },
-  //     {
-  //       "productId": "Q3W43CNC",
-  //       "productName": "Dual Monitor Desk Mount",
-  //       "price": {
-  //         "currency": "EUR",
-  //         "amount": 119.90
-  //       },
-  //       "quantity": 1
-  //     }
-  //   ],
-  //   "numberOfItems": 23,
-  //   "subTotal": {
-  //     "currency": "EUR",
-  //     "amount": 1299.68
-  //   }
-  // }
-
-  const [cartItemList, setCartItems] = useState([])
-  const [emptyCart, setEmptyCart] = useState(false)
-
-  {/*} Success / Failure/ Warning */}
+  /* Page Header message i.e. Success / Failure/ Warning */
   const [pageMessage, setPageMessage] = useState({
     'message': '',
     'type': ''
   });
+  const hidePageHeaderMessage = () => setPageMessage({message: '', type: ''})
 
+  /* Page Navigation */
+  const navigator = useNavigate();
+
+  function showProductList() {
+    navigator('/product');
+  }
+
+  /* Data with state */
+  const [customerId, setCustomerId] = useState('61157')
+  const [cartItemList, setCartItems] = useState([])
+  const [emptyCart, setEmptyCart] = useState(false)
+
+  /* Load Data on Page load / On Component mount */
   useEffect(() => {
         console.log("Fetching CartComponent...");
-        getCart(61157)
+        getCart(customerId)
         .then(response => {
           let data = response.data;
           console.log("Data received " + JSON.stringify(data));
@@ -82,6 +58,13 @@ const CartComponent = () => {
       },
       [])
 
+  /* Common Error handler */
+  function handleError(error) {
+    let errMessage = handleRestApiError(error);
+    setPageMessage({message: errMessage, type: "ERROR"})
+  }
+
+  /* Handle Increment/Decrement of Cart Items quantities */
   function handleIncrementItem(e) {
     let datatset = e.target.dataset;
     //console.log("Incrementing Item:" + datatset.productId + "|" + datatset.index);
@@ -155,32 +138,28 @@ const CartComponent = () => {
     }).catch(error => handleError(error))
   }
 
+  /* Handle Product/Cart deletion with Confirmation modal */
   const [productIdTBD, setProductIdTBD] = useState('')
   const [quantityTBD, setQuantityTBD] = useState('')
 
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
+  const [productRemovalModalShow, setProductRemovalModalShow] = useState(false);
+  const handleProductRemovalModalClose = () => setProductRemovalModalShow(
+      false);
 
-  const handleConfirmationModalShow = (e) => {
+  const [cartRemovalModalShow, setCartRemovalModalShow] = useState(false);
+  const handleCartRemovalModalClose = () => setCartRemovalModalShow(false);
+
+  const handleRemoveProductConfirmationModalShow = (e) => {
     setProductIdTBD(e.target.dataset.productId);
     setQuantityTBD(e.target.dataset.productQuantity);
-    setShow(true);
+    setProductRemovalModalShow(true);
   }
 
-  function handleError(error) {
-    console.log(error);
-    let errCode = error.code;
-    let errMessage = "Houston is working on the problem. Please try again later!!";
-    if (errCode === 'ERR_NETWORK') {
-      errMessage = "Connection Error. Please try again later!!"
-    } else if (errCode === 'ERR_BAD_REQUEST') {
-      errMessage = error.response.data.errorMessage;
-    }
-    setPageMessage({message: errMessage, type: "ERROR"})
-  }
+  const handleRemoveCartConfirmationModalShow = () => setCartRemovalModalShow(
+      true);
 
   const handleDeleteItem = () => {
-    handleClose();
+    handleProductRemovalModalClose();
     console.log(productIdTBD + '|' + quantityTBD)
     removeItemFromCart(61157, productIdTBD, quantityTBD)
     .then(response => {
@@ -200,16 +179,22 @@ const CartComponent = () => {
             })
           }
         }
-    ).catch(error => handleError(error)
-    )
+    ).catch(error => handleError(error))
   }
 
-  const hidePageHeaderMessage = () => setPageMessage({message: '', type: ''})
-
-  const navigator = useNavigate();
-
-  function showProductList() {
-    navigator('/product');
+  const handleDeleteCart = () => {
+    handleCartRemovalModalClose();
+    console.log("deleting cart: " + customerId)
+    deleteCart(customerId).then(response => {
+          console.log("Data received " + JSON.stringify(response.data));
+          setCartItems([])
+          setPageMessage({
+            message: "Cart is Empty",
+            type: "WARNING"
+          })
+          setEmptyCart(true)
+        }
+    ).catch(error => handleError(error));
   }
 
   return (
@@ -230,6 +215,12 @@ const CartComponent = () => {
             :
             <div className='container table-responsive'>
               <h1 className="text-center">Cart Item List</h1>
+              <div className="float-end mb-4">
+                <button className="btn btn-primary" type="button"
+                        onClick={handleRemoveCartConfirmationModalShow}>Clear
+                  Cart
+                </button>
+              </div>
               <table className="table table-striped table-bordered">
                 <thead>
                 <tr>
@@ -278,7 +269,7 @@ const CartComponent = () => {
                       <i className="fa-solid fa-trash-can app-trash-icon"
                          data-product-id={item.productId}
                          data-product-quantity={item.quantity}
-                         onClick={handleConfirmationModalShow}
+                         onClick={handleRemoveProductConfirmationModalShow}
                       ></i>
                     </span>
                         </td>
@@ -296,10 +287,17 @@ const CartComponent = () => {
               </div>
             </div>
         }
-        <ConfirmationModalComponent show={show} handleClose={handleClose}
+        <ConfirmationModalComponent show={productRemovalModalShow}
+                                    handleClose={handleProductRemovalModalClose}
                                     title={'Cart Item removal confirmation!'}
                                     body={'Do you really want to remove this Item from Cart?'}
                                     handleConfirmation={handleDeleteItem}/>
+
+        <ConfirmationModalComponent show={cartRemovalModalShow}
+                                    handleClose={handleCartRemovalModalClose}
+                                    title={'Cart removal confirmation!'}
+                                    body={'Do you really want to remove all Items from Cart?'}
+                                    handleConfirmation={handleDeleteCart}/>
       </div>
 
   )

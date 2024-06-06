@@ -1,0 +1,42 @@
+[
+   {
+     "id": "K3SR7PBX",
+     "name": "27-Inch Curved Computer Monitor",
+     "description": "Enjoy big, bold and stunning panoramic views",
+     "price": {
+       "currency": "INR",
+       "amount": 159.99
+     },
+     "itemsInStock": 24081
+   },
+   {
+     "id": "Q3W43CNC",
+     "name": "Dual Monitor Desk Mount",
+     "description": "Ultra wide and longer arm fits most monitors",
+     "price": {
+       "currency": "INR",
+       "amount": 119.90
+     },
+     "itemsInStock": 1079
+   },
+   {
+     "id": "TTKQ8NJZ",
+     "name": "Plastic Sheeting",
+     "description": "Clear plastic sheeting, tear-resistant, tough, and durable",
+     "price": {
+       "currency": "INR",
+       "amount": 42.99
+     },
+     "itemsInStock": 55
+   },
+   {
+     "id": "WM3BPG3E",
+     "name": "50ft Led Lights",
+     "description": "Enough lights to decorate an entire room",
+     "price": {
+       "currency": "INR",
+       "amount": 11.69
+     },
+     "itemsInStock": 3299
+   }
+ ]

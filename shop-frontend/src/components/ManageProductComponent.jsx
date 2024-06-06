@@ -6,15 +6,11 @@ import {
 } from "../services/ProductService.js";
 import {useNavigate, useParams} from "react-router-dom";
 import PageHeaderMessageComponent from "./PageHeaderMessageComponent.jsx";
+import {handleRestApiError} from "./RestCallErrorHandler.jsx";
 
 const ManageProductComponent = () => {
-  const [name, setName] = useState('')
-  const [desc, setDesc] = useState('')
-  const [quantity, setQuantity] = useState('')
-  const [price, setPrice] = useState('')
-  const [currency, setCurrency] = useState('INR')
 
-  {/*} Success / Failure/ Warning */}
+  /* Page Header message i.e. Success / Failure/ Warning */
   const [pageMessage, setPageMessage] = useState({
     'message': '',
     'type': ''
@@ -22,9 +18,25 @@ const ManageProductComponent = () => {
 
   const hidePageHeaderMessage = () => setPageMessage({message: '', type: ''})
 
+  /* Page Navigation */
+  const navigator = useNavigate();
+
+  function showProductList() {
+    navigator('/product');
+  }
+
+  /* Fetch data as shared during navigation from previous page */
   const {productId} = useParams();
   console.log("ProductId: " + productId);
 
+  /* Data with state */
+  const [name, setName] = useState('')
+  const [desc, setDesc] = useState('')
+  const [quantity, setQuantity] = useState('')
+  const [price, setPrice] = useState('')
+  const [currency, setCurrency] = useState('INR')
+
+  /* Load Data on Page load / On Component mount */
   useEffect(() => {
         if (productId) {
           findProduct(productId)
@@ -92,22 +104,10 @@ const ManageProductComponent = () => {
     .catch(error => handleError(error))
   }
 
+  /* Common Error handler */
   function handleError(error) {
-    console.log(error);
-    let errCode = error.code;
-    let errMessage = "Houston is working on the problem. Please try again later!!";
-    if (errCode === 'ERR_NETWORK') {
-      errMessage = "Connection Error. Please try again later!!"
-    } else if (errCode === 'ERR_BAD_REQUEST') {
-      errMessage = error.response.data.errorMessage;
-    }
+    let errMessage = handleRestApiError(error);
     setPageMessage({message: errMessage, type: "ERROR"})
-  }
-
-  const navigator = useNavigate();
-
-  function showProductList() {
-    navigator('/product');
   }
 
   return (
@@ -117,7 +117,7 @@ const ManageProductComponent = () => {
             type={pageMessage.type}
             hidePageHeaderMessage={hidePageHeaderMessage}/>}
         <div className="row">
-          <div className="card col-md-6 offset-md-3 offset-md-3">
+          <div className="card col-md-6 offset-md-3">
             <h2 className="text-center"> {productId ? 'Update'
                 : 'Add'} Product</h2>
             <div className="card-body">

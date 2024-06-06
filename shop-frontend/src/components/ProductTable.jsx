@@ -6,6 +6,20 @@ import ConfirmationModalComponent from "./ConfirmationModalComponent.jsx";
 
 const ProductTable = props => {
 
+  /* Page Navigation */
+  const navigator = useNavigate();
+
+  function handleUpdateProduct(e) {
+    let productId = e.target.dataset.productId;
+    console.log("Updating Product:" + productId);
+
+    navigator(`/updateProduct/${productId}`);
+  }
+
+  /* Data with state */
+  const [customerId, setCustomerId] = useState('61157')
+
+  /* Handle Actions with Confirmation modal */
   function handleAddToCart(e) {
     let dataset = e.target.dataset;
     let productId = dataset.productId;
@@ -17,7 +31,7 @@ const ProductTable = props => {
       return;
     }
 
-    addItemToCart(61157, productId, productQuantity)
+    addItemToCart(customerId, productId, productQuantity)
     .then(response => {
       console.log("Data received " + JSON.stringify(response.data));
       const newProductList = [...props.productList];
@@ -33,15 +47,6 @@ const ProductTable = props => {
       })
     })
     .catch(error => props.handleError(error))
-  }
-
-  const navigator = useNavigate();
-
-  function handleUpdateProduct(e) {
-    let productId = e.target.dataset.productId;
-    console.log("Updating Product:" + productId);
-
-    navigator(`/updateProduct/${productId}`);
   }
 
   function handleDecrementItem(e) {

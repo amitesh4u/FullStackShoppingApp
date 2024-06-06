@@ -3,9 +3,25 @@ import {findProducts} from "../services/ProductService.js";
 import {useLocation, useNavigate} from "react-router-dom";
 import ProductTable from "./ProductTable.jsx";
 import PageHeaderMessageComponent from "./PageHeaderMessageComponent.jsx";
+import {handleRestApiError} from "./RestCallErrorHandler.jsx";
 
 const ProductSearchResultComponent = () => {
 
+  /* Page Header message i.e. Success / Failure/ Warning */
+  const [pageMessage, setPageMessage] = useState({
+    'message': '',
+    'type': ''
+  });
+  const hidePageHeaderMessage = () => setPageMessage({message: '', type: ''})
+
+  /* Page Navigation */
+  const navigator = useNavigate();
+
+  function showAllProducts() {
+    navigator('/product');
+  }
+
+  /* Fetch data as shared during navigation from previous page */
   const location = useLocation();
   let query = location.state.query;
 
@@ -14,11 +30,18 @@ const ProductSearchResultComponent = () => {
 
   //const {query} = useParams();
 
+  /* Data with state */
   const [productList, setProducts] = useState([])
   const [searchString, setSearchString] = useState(query)
 
+  /* Load Data on Page load / On Component mount */
+  useEffect(() => {
+        searchProducts();
+      },
+      [])
+
   function searchProducts() {
-    if(searchString.length < 3){
+    if (searchString.length < 3) {
       return;
     }
     console.log("Fetching Products for " + searchString);
@@ -39,41 +62,15 @@ const ProductSearchResultComponent = () => {
     .catch(error => handleError(error))
   }
 
-  function handleError(error) {
-    console.log(error);
-    let errCode = error.code;
-    let errMessage = "Houston is working on the problem. Please try again later!!";
-    if (errCode === 'ERR_NETWORK') {
-      errMessage = "Connection Error. Please try again later!!"
-    } else if (errCode === 'ERR_BAD_REQUEST') {
-      errMessage = error.response.data.errorMessage;
-    }
-    setPageMessage({message: errMessage, type: "ERROR"})
-  }
-
-  {/*} Success / Failure/ Warning */}
-  const [pageMessage, setPageMessage] = useState({
-    'message': '',
-    'type': ''
-  });
-
-  const hidePageHeaderMessage = () => setPageMessage({message: '', type: ''})
-
-
-  useEffect(() => {
-        searchProducts();
-      },
-      [])
-
-  const navigator = useNavigate();
-
-  function showAllProducts() {
-    navigator('/product');
-  }
-
   function handleProductSearch(e) {
     e.preventDefault();
     searchProducts();
+  }
+
+  /* Common Error handler */
+  function handleError(error) {
+    let errMessage = handleRestApiError(error)
+    setPageMessage({message: errMessage, type: "ERROR"})
   }
 
   return (

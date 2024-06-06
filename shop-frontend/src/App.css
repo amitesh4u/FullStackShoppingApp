@@ -6,6 +6,34 @@
   text-align: left;
 }
 
+.app-nav-link {
+  color: rgb(255,255,255) !important;
+  border-radius: 5px;
+}
+
+.app-nav-link:hover{
+  color: rgb(30, 29, 29) !important;
+  background-color: rgb(255,255,255) !important;
+
+}
+.app-cart-icon {
+  padding-right: 5px;
+  font-size: 20px;
+  color: rgb(0, 50, 120);
+}
+
+.app-signin-icon {
+  padding-right: 5px;
+  font-size: 20px;
+  color: rgb(0, 50, 120);
+}
+
+.app-signup-icon {
+  padding-right: 5px;
+  font-size: 20px;
+  color: rgb(0, 50, 120);
+}
+
 .app-incr-icon{
   padding: 7px;
   font-size: 15px;

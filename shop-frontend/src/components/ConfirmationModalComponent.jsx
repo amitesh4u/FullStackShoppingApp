@@ -3,7 +3,6 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
 const ConfirmationModalComponent = (props) => {
-
   return (
       <div>
         <Modal show={props.show} onHide={props.handleClose} backdrop="static"
